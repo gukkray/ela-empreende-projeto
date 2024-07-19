@@ -1,0 +1,51 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>
+    Produtos
+</title>
+{% endblock %}
+
+
+{% block corpo %}
+<div>
+    <section id="gallery">
+        <div class="container">
+          <a href="{% url 'cadastrar-produto' %}"  class = "btn btn-primary btn-sm"> Adicionar Produto </a>
+      <hr>
+          <div class="row">           
+        {% for Produto in object_list %}
+          <div class="col-lg-4 mb-4">
+          <div class="card">
+            <div class="tentando">
+                {% if Produto.imagem %}
+                    <img src="/media/{{ Produto.imagem }}" alt="Imagem do Produto" style="margin-top: 3%; width: 342px; height: 200px; object-fit: contain;">
+                {% else %}
+                    <br><center style="padding-top: 30%; width: 300px; height: 203px;">Nenhuma imagem disponível</center>
+                {% endif %} 
+            </div>
+             <div class="card-body">
+              
+              <center><b class="card-title" style="font-weight: bold;">{{ Produto.nome }}</b></center><br>
+              <p class="card-price">{{ Produto.descricao|truncatewords:15 }} </p>
+              <p class="card-price" style="font-weight: bold; color: #e21e80;">R$ {{ Produto.preco }}</p>
+              
+              {% if Produto.oferta %}
+              <p class="card-price">Este produto está em oferta!</p>
+              {% endif %}
+            
+            </div>
+           </div>
+          </div>
+          {% empty %}
+          <tr>
+              <td colspan="7">Nenhum Campo Registrado.</td>
+          </tr>
+          {% endfor %}
+        </div>
+      </div>
+      </section>      
+</div>
+
+{% endblock %}

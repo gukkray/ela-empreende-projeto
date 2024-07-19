@@ -1,0 +1,22 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>
+    Excluir Endereço
+</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+    <p>Confirme para excluir o endereço:</p>
+    <h4>{{ object }}</h4>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p>Deseja excluir o endereço acima?</p>
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'perfil_usuario' object.user.username %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "modelo.html" %}
+{% load static %}
+<link href="{% static 'img/icon.png' %}" rel="icon">
+
+{% block titulo %}
+<title>
+    Excluir movimentacao
+</title>
+{% endblock %}
+
+
+{% block corpo %}
+<div class="container">
+    <p>
+        Confirme para excluir 
+    </p>
+
+    <h4>
+        Excluir 
+    </h4>
+
+    <form action="" method="POST">
+        <p>
+            Deseja excluir: <b>{{ object }}?</b>
+        </p>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "modelo.html" %}
+{% load static %}
+{% block corpo %}
+<style>
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    overflow: hidden;
+  
+}
+
+#comentarios {
+    flex: 1;
+    margin-bottom: 150px;
+}
+
+.comment-area form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.comment-area {
+    
+    padding: 20px;
+    background-color: #f6f9ff;
+    position: fixed;
+    bottom: 0;
+    width: 80%;
+}
+
+.textarea {
+    width: 79%;
+    height: 30%;
+    min-height: 0px;
+    /* padding: px;*/
+    padding-right: 40%;
+    margin-right: 0px;
+    border-radius: 40px;
+    resize: none;
+}
+
+.comment-area button[type="submit"] {
+    padding: 15px;
+    border: none;
+    margin-left: 4%;
+    margin-bottom: 25px;
+    border-radius: 50px;
+    background-color: #af4c9e;
+    color: #fff;
+}
+
+.comment-area button[type="submit"]:hover {
+    background-color: #8a7dff;
+}
+
+/* Estilos para o formulário de adicionar comentário */
+#novo-comentario {
+    margin-top: 20px;
+}
+
+#novo-comentario h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #af4cad;
+}
+
+.tras {
+    transform: rotate(40.5deg);
+}
+
+#novo-comentario form {
+    display: flex;
+    flex-direction: row;
+}
+
+#novo-comentario form label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#novo-comentario form textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    flex: 1;
+}
+
+#novo-comentario form button[type="submit"] {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #af4c9e;
+    color: #fff;
+    cursor: pointer;
+}
+
+#novo-comentario form button[type="submit"]:hover {
+    background-color: #8a7dff;
+}
+
+@media (max-width: 1140px) {
+    .comment-area {
+        width: 90%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .textarea {
+        width: 50%;
+        /* height: 2px; */
+        min-height: 0px;
+        padding: 10px;
+        padding-right: 2%;
+        margin-right: 43%;
+        /* border-radius: 40px; */
+        resize: none;
+    }
+
+    .container {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    overflow: hidden;
+    margin-left: auto
+}
+
+    .comment-area button[type="submit"] {
+        width: 100%;
+        
+    }
+
+    #novo-comentario form {
+        flex-direction: column;
+    }
+
+    #novo-comentario form textarea {
+        width: 100%;
+    }
+
+    #novo-comentario form button[type="submit"] {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+
+
+</style>
+
+<div class="container">
+    <h1>Conversas com Empreendedoras</h1>
+    <div id="comentarios">
+        {% for comentario in comentarios %}
+        <div class="comment card mb-3">
+            <div class="card-body">
+                <div class="user-info">
+                    <h3>{{ comentario.autor.username }}</h3>
+                </div>
+                <p>{{ comentario.texto }}</p>
+                <p>
+                    <small>Publicado em {{ comentario.data_publicacao }}</small>
+                </p>
+            </div>
+        </div>
+        {% empty %}
+        <p>Não há conversas disponíveis.</p>
+        {% endfor %}
+    </div>
+    <!-- Formulário para Adicionar Comentário -->
+    <div class="comment-area">
+        <form method="post">
+            <div class="textarea">
+            {% csrf_token %}
+            {{ form.as_p }}
+            </div>
+            <div>
+            <button type="submit" class="btn btn-primary btn-sm" style="margin: 1px; ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send tras" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+                  </svg>
+            </button>
+            </div>
+        </form>
+    </div>
+    <!-- Fim do Formulário para Adicionar Comentário -->
+</div>
+{% endblock %}

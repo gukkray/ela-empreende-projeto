@@ -1,0 +1,67 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>Listar clientes</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+    <a href="{% url 'cliente_create' %}" class="btn btn-primary btn-sm">
+        <i class="bi bi-person-plus"></i> Novo cliente
+    </a>
+    <br><br>
+    {% if aniversariantes %}
+    <div class="alert alert-info">
+        <ul style="list-style-type: none;">
+            {% for cliente in aniversariantes %}
+            <li>Hoje é aniversário de: {{ cliente.nome }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+
+    <hr>
+    <h4><i class="bi bi-people"></i> Listar clientes</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th><i class="bi bi-person-vcard"></i> Data de Nascimento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr id="cliente-{{ cliente.pk }}">
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.telefone }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.endereco }}</td>
+                <td>{{ cliente.data_nascimento|date:"d/m/Y" }}</td>
+                <!--<td>
+                    <a href="{% url 'cliente_update' cliente.pk %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="{% url 'cliente_delete' cliente.pk %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </td>-->
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum cliente encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}

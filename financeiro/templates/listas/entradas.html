@@ -1,0 +1,42 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>
+    Listar Entradas
+</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+
+<a href="{% url 'tipo-movimentacao' %}"  class="btn btn-primary btn-sm"> Adicionar movimentacao </a>
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Opções</th>
+        </tr>
+
+        {% for Movimentacao in object_list %}
+        <tr>
+            <td>{{ Movimentacao.descricao }}</td>
+            <td>{{ Movimentacao.valor }}</td>
+            <td>{{ Movimentacao.data }}</td>
+            <td>
+                <a href="{% url 'excluir-entrada' Movimentacao.pk %}"  class="btn btn-danger btn-sm" title="Excluir"> X </a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhum Campo Registrado.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+{% endblock %} 

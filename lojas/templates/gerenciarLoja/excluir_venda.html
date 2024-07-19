@@ -1,0 +1,35 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>
+    Excluir venda
+</title>
+{% endblock %}
+<link href="{% static 'img/icon.png' %}" rel="icon">
+
+{% block corpo %}
+<div class="container">
+    <p>
+        Confirme para excluir a venda
+    </p>
+    <h4>
+        Excluir Venda
+    </h4>
+
+    <form action="" method="POST">
+        <p>
+            Deseja excluir a venda dos seguintes produtos?
+        </p>
+        <ul>
+            {% for item in produtos %}
+                <li>{{ item.produto.nome }} - Quantidade: {{ item.quantidade }}</li>
+            {% endfor %}
+        </ul>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'listar_vendas' %}" class="btn btn-secondary">Cancelar</a>
+        
+    </form>
+</div>
+{% endblock %}

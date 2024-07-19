@@ -1,0 +1,124 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+
+
+{% block titulo %}
+<title>
+    Listar Produtos
+</title>
+{% endblock %}
+<link href="{% static 'img/icon.png' %}" rel="icon">
+
+<style>
+    .ladoo{
+        margin: 30%;
+    }
+</style>
+
+{% block corpo %}
+<!-- End<div class="container">
+    <div class="search-bar">
+        <form method="GET" action="{% url 'listar-produto' %}" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="q" id="searchInput" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="{{ request.GET.q }}">
+                <div class="input-group-append">
+                    <button class="btn " type="button" id="clearSearch" style="display: none;">
+                        x
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                        </svg>
+                    </button>
+                    
+                </div>
+            </div>
+        </form>
+    </div> -->
+    <div class="container">
+    <a href="{% url 'cadastrar-produto' %}"  class = "btn btn-primary btn-sm"> Adicionar Produto </a>
+    <hr>
+    <div class="table-responsive">
+        <table class="table">
+         <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>IMG</th>
+                <th>Status</th>
+                <th>produto em oferta</th>
+                <th>Opções</th>
+            </tr></table>
+        <table class="table table-striped">
+           
+            {% for Produto in object_list %}
+            
+            <tr>
+                <td>{{ Produto.nome }}</td>
+                <td>{{ Produto.descricao }}</td>
+                <td>{{ Produto.preco }}</td>
+                <td>{{ Produto.quantidade_estoque }}</td>
+                {% if Produto.imagem %}
+                <td><img src="/media/{{ Produto.imagem }}" alt="Imagem do Produto" style="width: 300px; height: 200px; object-fit: contain;"></td>
+                {% else %}
+                <td>Nenhuma imagem </td>
+                {% endif %}
+                
+                {% if Produto.na_loja %}
+                <td>Produto disponivel na loja</td>
+                {% else %}
+                <td> Edite para adicionar seu produto na loja</td>
+                {% endif %}
+
+                {% if Produto.oferta %}
+                <td>sim</td>
+                {% else %}
+                <td> não </td>
+                {% endif %}
+                <td style="display: flex;">
+                    <a href="{% url 'editar-produto' Produto.pk %}" class="btn btn-primary btn-sm" title="Editar"> Editar </a>
+                    <a href="{% url 'excluir-produto' Produto.pk %}" class="btn btn-danger btn-sm" style="margin-left: 1%;" title="Editar"> Excluir </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">Nenhum Campo Registrado.</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        
+    </div>
+</div>
+</div>
+<!--<script>
+   
+    // Função para mostrar ou esconder o botão "x"
+    function toggleClearButton() {
+        var searchInput = document.getElementById('searchInput');
+        var clearButton = document.getElementById('clearSearch');
+        if (searchInput.value.length > 0) {
+            clearButton.style.display = 'inline';
+        } else {
+            clearButton.style.display = 'none';
+        }
+    }
+
+    // Adicionar evento ao campo de entrada para monitorar mudanças
+    document.getElementById('searchInput').addEventListener('input', toggleClearButton);
+
+    // Adicionar evento ao botão "x" para limpar a busca
+    document.getElementById('clearSearch').addEventListener('click', function() {
+        document.getElementById('searchInput').value = '';
+        toggleClearButton(); // Esconde o botão "x"
+        document.querySelector('form').submit(); // Envia o formulário
+    });
+
+    // Chama a função para definir o estado inicial do botão "x"
+    toggleClearButton();
+</script> -->
+
+
+{% endblock %}

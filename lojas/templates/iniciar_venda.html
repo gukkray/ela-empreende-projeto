@@ -1,0 +1,17 @@
+{% extends "modelo.html" %}
+{% block corpo %}
+<body>
+    <div class="container">
+    <h1>Iniciar Venda</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Iniciar Venda</button>
+    </form>
+    </div>
+</body>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'js/escolher_loja.js' %}"></script>
+{% endblock %}

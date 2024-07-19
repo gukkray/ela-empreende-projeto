@@ -1,0 +1,94 @@
+{% extends 'modelo.html' %}
+{% load static %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/abrir_caixa.css' %}">
+<style>
+    .bold-text {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block corpo %}
+<div id="layoutSidenav_content" class="corpo">
+    <main>
+        <div class="container">
+            <a href="{% url 'cadastrar-produto' %}" class="btn btn-primary btn-sm">Ver Vendas</a>
+            <hr>
+            <div class="products-list">
+                <h2>Adicionar Produtos à Venda</h2>
+            </div>
+            <div class="product-actions">
+                <form method="post" id="formAdicionarProduto" action="{% url 'adicionar_produto' venda.id %}">
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <input type="text" class="input-custom" id="buscaProduto" placeholder="Buscar produto por nome...">
+                    <select id="listaProdutos" name="produto_id" class="input-custom">
+                        {% for produto in produtos %}
+                        <option value="{{ produto.id }}" data-codigo-barras="{{ produto.codigo_barras }}">{{ produto.nome }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="quantidade" min="1" value="1" class="input-custom">
+                    <input type="submit" value="Adicionar Produto" class="myapp-btn myapp-btn-add btn btn-primary">
+                </form>
+
+                <h5 style="margin-top: 2%;">Produtos na Venda</h5>
+                <ul id="listaItensVenda">
+                    {% for item in venda.itens.all %}
+                    <li>
+                        {{ item.produto.nome }} - Quantidade: {{ item.quantidade }} - {{ item.produto.preco }}R$
+                        <a href="{% url 'excluir_item_venda' venda.id item.id %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(255, 0, 0); margin:1%" width="20" height="25" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                            </svg>
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li>Nenhum produto adicionado.</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>Total: {{ venda.total }}R$</h5>
+                <br>
+                <div class="sale-actions" style="display: flex;">
+                    <a href="{% url 'finalizar_venda' venda.id %}" class="myapp-btn myapp-btn-finish btn btn-primary">Finalizar Venda</a>
+                    <br>
+                    <a href="{% url 'iniciar_venda' %}" style="margin-left: 0.5%;" class="myapp-btn myapp-btn-new btn btn-primary">Abrir Nova Venda</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jsvenda.js' %}"></script>
+<script>
+    // Script para buscar produtos por nome
+    $('#buscaProduto').on('keyup', function () {
+        var termo = $(this).val().toLowerCase();
+        $.ajax({
+            url: '{% url "buscar_produto" %}',
+            data: {
+                termo: termo
+            },
+            dataType: 'json',
+            success: function (data) {
+                var produtos = data.produtos;
+                var options = '';
+                produtos.forEach(function (produto) {
+                    options += '<option value="' + produto.id + '">' + produto.nome + '</option>';
+                });
+                $('#listaProdutos').html(options);
+            }
+        });
+    });
+</script>
+{% endblock %}

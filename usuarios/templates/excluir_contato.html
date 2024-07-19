@@ -1,0 +1,25 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>Excluir Contato</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+    
+
+    <h4>Excluir Contato</h4>
+    <p>Confirme para excluir o contato:</p>
+
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn  btn-danger">Excluir</button>
+        <a href="{% url 'perfil_usuario' request.user.username %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,24 @@
+<!-- excluir_links.html -->
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>
+    Excluir 
+</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+    <p>Confirme para excluir os links</p>
+
+    <h4>Excluir Links</h4>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn  btn-danger">Excluir</button>
+        <a href="{% url 'perfil_usuario' request.user.username %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

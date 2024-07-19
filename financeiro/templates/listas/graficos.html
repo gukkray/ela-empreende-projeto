@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gráfico de Barras</title>
+  <style>
+    .g {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+    }
+    #chartContainer {
+      width: 25%;
+      height: 25%;
+      position: absolute;
+      top: 10%;
+      left: 5%;
+    }
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<div class="g">
+    
+    <div id="chartContainer">
+      <canvas id="myChart"></canvas>
+    </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    let dataset1Data, dataset2Data, dataset1Labels, dataset2Labels;
+
+    // Obtendo os dados de entrada
+    fetch('/obter-dados-entrada/')
+        .then(response => response.json())
+        .then(data => {
+            dataset1Data = data.map(item => item.valor); // Extrair os valores
+            dataset1Labels = data.map(item => item.data); // Extrair as datas
+            updateChart(); // Atualizar o gráfico
+        });
+
+    // Obtendo os dados de saída
+    fetch('/obter-dados-saida/')
+        .then(response => response.json())
+        .then(data => {
+            dataset2Data = data.map(item => item.valor); // Extrair os valores
+            dataset2Labels = data.map(item => item.data); // Extrair as datas
+            updateChart(); // Atualizar o gráfico
+        });
+
+    // Função para atualizar o gráfico
+    function updateChart() {
+        if (dataset1Data && dataset2Data && dataset1Labels && dataset2Labels) {
+            const labels = [...new Set([...dataset1Labels, ...dataset2Labels])]; // Unir e remover datas duplicadas
+            const data1 = mapDataToLabels(dataset1Data, dataset1Labels, labels);
+            const data2 = mapDataToLabels(dataset2Data, dataset2Labels, labels);
+
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Entradas',
+                            data: data1,
+                            backgroundColor: 'rgba(230, 230, 250, 1)', 
+                            borderColor: 'rgba(180, 180, 200, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Saídas',
+                            data: data2,
+                            backgroundColor: 'rgba(230, 150, 250, 1)',
+                            borderColor: 'rgbargba(230, 150, 250, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 0,
+                                    yMax: 0,
+                                    borderColor: 'rgba(100, 100, 100, 1)', // Cor rosa claro
+                                    borderWidth: 2,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Separador'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Função para associar os dados às datas corretas
+    function mapDataToLabels(data, labels, targetLabels) {
+        return targetLabels.map(label => {
+            const index = labels.indexOf(label);
+            return index !== -1 ? data[index] : 0;
+        });
+    }
+  </script>
+</div>
+</html>

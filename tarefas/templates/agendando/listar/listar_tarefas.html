@@ -1,0 +1,128 @@
+{% extends "modelo.html" %}
+{% load static %}
+
+{% block titulo %}
+<title>Listar Tarefas</title>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+<!--    <div class="search-bar">
+        <form method="GET" action="{% url 'listar-produto' %}" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="q" id="searchInput" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="{{ request.GET.q }}">
+                <button class="btn " type="button" id="clearSearch" style="display: none;">
+                    x
+                </button>
+                
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                        </svg>
+                    </button>
+                    
+                </div>
+            </div>
+        </form>
+    </div> --> 
+
+    
+
+
+    <a href="{% url 'cadastrar-tarefa' %}"class="btn btn-primary btn-sm" >Nova Tarefa</a>
+    <hr>
+    <h4>Listar Tarefas</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data de Início</th>
+                <th>Data de Término</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarefa in tarefas %}
+            <tr id="tarefa-{{ tarefa.pk }}">
+                <td>{{ tarefa.nome }}</td>
+                <td>{{ tarefa.descricao }}</td>
+                <td>{{ tarefa.data_inicio }}</td>
+                <td>{{ tarefa.data_fim }}</td>
+                <td >
+                    <a href="{% url 'editar-tarefa' tarefa.pk %}" class="btn btn-primary btn-sm " >Editar</a>
+                    <a href="{% url 'excluir-tarefa' tarefa.pk %}" class="btn btn-danger btn-sm ">Excluir</a>
+                    <button class="btn btn-success btn-sm" onclick="concluirTarefa('{{ tarefa.pk }}')">Concluir</button>
+                </td>
+            </tr>
+            
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhuma tarefa encontrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--<script>
+    // Função para mostrar ou esconder o botão "x"
+    function toggleClearButton() {
+        var searchInput = document.getElementById('searchInput');
+        var clearButton = document.getElementById('clearSearch');
+        if (searchInput.value.length > 0) {
+            clearButton.style.display = 'inline';
+        } else {
+            clearButton.style.display = 'none';
+        }
+    }
+
+    // Adicionar evento ao campo de entrada para monitorar mudanças
+    document.getElementById('searchInput').addEventListener('input', toggleClearButton);
+
+    // Adicionar evento ao botão "x" para limpar a busca
+    document.getElementById('clearSearch').addEventListener('click', function() {
+        document.getElementById('searchInput').value = '';
+        toggleClearButton(); // Esconde o botão "x"
+        document.querySelector('form').submit(); // Envia o formulário
+    });
+
+    // Chama a função para definir o estado inicial do botão "x"
+    toggleClearButton();
+</script>
+ -->
+
+<script>
+    function concluirTarefa(tarefaId) {
+    // Fazer uma requisição AJAX para marcar a tarefa como concluída
+    $.ajax({
+        url: '/concluir-tarefa/',
+        type: 'POST',
+        data: {
+            'tarefa_id': tarefaId,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function(response) {
+            if (response.success) {
+                // Esconder a linha da tabela que representa a tarefa concluída
+                $('#tarefa-' + tarefaId).hide();
+                alert('Tarefa concluída com sucesso!');
+            } else {
+                alert('Erro ao concluir a tarefa: ' + response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('Erro ao concluir a tarefa: ' + error);
+        }
+    });
+}
+
+</script>
+{% endblock %}
