@@ -5,7 +5,7 @@
     <h1>Iniciar Venda</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Iniciar Venda</button>
+        <button type="submitt" class="btn btn-primary">Iniciar Venda</button>
     </form>
     </div>
 </body>
@@ -14,4 +14,13 @@
 {% block scripts %}
     {% load static %}
     <script src="{% static 'js/escolher_loja.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const button = document.querySelector("form button[type='submitt']");
+            if (button) {
+                button.click();
+                button.disabled = true; // Desativa o botão após o clique
+            }
+        });
+    </script>
 {% endblock %}

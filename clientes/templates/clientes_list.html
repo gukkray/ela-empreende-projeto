@@ -43,14 +43,14 @@
                 <td>{{ cliente.email }}</td>
                 <td>{{ cliente.endereco }}</td>
                 <td>{{ cliente.data_nascimento|date:"d/m/Y" }}</td>
-                <!--<td>
+                <td>
                     <a href="{% url 'cliente_update' cliente.pk %}" class="btn btn-primary btn-sm">
                         <i class="bi bi-pencil"></i> Editar
                     </a>
                     <a href="{% url 'cliente_delete' cliente.pk %}" class="btn btn-danger btn-sm">
                         <i class="bi bi-trash"></i> Excluir
                     </a>
-                </td>-->
+                </td>
             </tr>
             {% empty %}
             <tr>

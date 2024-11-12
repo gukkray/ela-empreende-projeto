@@ -1,8 +1,10 @@
 {% extends 'modelo.html' %}
 {% load static %}
 
-{% block estilo %}
+{% block estilos %}
 <link rel="stylesheet" href="{% static 'css/abrir_caixa.css' %}">
+<link rel="stylesheet" href="{% static 'css/cssdavenda .css ' %}">
+
 <style>
     .bold-text {
         font-weight: bold;
@@ -14,7 +16,6 @@
 <div id="layoutSidenav_content" class="corpo">
     <main>
         <div class="container">
-            <a href="{% url 'cadastrar-produto' %}" class="btn btn-primary btn-sm">Ver Vendas</a>
             <hr>
             <div class="products-list">
                 <h2>Adicionar Produtos à Venda</h2>
@@ -61,6 +62,7 @@
                     <a href="{% url 'finalizar_venda' venda.id %}" class="myapp-btn myapp-btn-finish btn btn-primary">Finalizar Venda</a>
                     <br>
                     <a href="{% url 'iniciar_venda' %}" style="margin-left: 0.5%;" class="myapp-btn myapp-btn-new btn btn-primary">Abrir Nova Venda</a>
+                    <a href="{% url 'cadastrar-produto' %}" class="btn btn-primary btn-sm">Ver Vendas</a>
                 </div>
             </div>
         </div>

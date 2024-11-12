@@ -69,7 +69,7 @@ class ProdutosGeraisList(LoginRequiredMixin, ListView):
 class ProdutoList(LoginRequiredMixin, ListView):
     login_url = '/login/'  # substitua com sua URL de login
     model = Produto
-    template_name = "gerenciar/listas/produto.html"
+    template_name = "gerenciar/listas/produtos_gerais.html"
     context_object_name = 'produtos'  # especifica o nome do contexto
     ordering = ['-id']  # opcional: ordena pelo ID do produto ou outro campo
 

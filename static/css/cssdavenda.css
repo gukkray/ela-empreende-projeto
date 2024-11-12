@@ -1,0 +1,102 @@
+/* Estilo geral para o formulário */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo para os campos de entrada */
+form input[type="text"],
+form input[type="number"],
+form input[type="submit"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo para o campo de seleção de produtos */
+#produtos-formset .produto-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.produto-form select {
+    width: calc(100% - 50px);
+    margin-right: 10px;
+}
+
+/* Botão de adicionar produto */
+#add-produto-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-produto-btn:hover {
+    background-color: #45a049;
+}
+
+/* Botão de salvar */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0069d9;
+}
+
+/* Estilo para o botão de pagamento */
+#informar-pagamento-btn {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#informar-pagamento-btn:hover {
+    background-color: #e0a800;
+}
+
+/* Títulos e labels */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Espaçamento entre os campos */
+.form-group {
+    margin-bottom: 20px;
+}
