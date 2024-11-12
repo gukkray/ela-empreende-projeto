@@ -7,6 +7,35 @@
 <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
 <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 <link href="{% static 'css/inicio.css' %}" rel="stylesheet">
+
+<style>
+/* Estilo para diminuir o botão */
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+    height: auto !important;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efeito de sombra ao passar o mouse (hover) */
+.btn-primary:hover {
+    background-color: var(--indigo) !important;
+    border-color: var(--indigo) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;  /* Adiciona sombra */
+}
+
+/* Se quiser mudar a cor quando o botão estiver ativo (clicado) */
+.btn-primary:active {
+    background-color: var(--purple) !important;
+    border-color: var(--purple) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;  /* Ajusta a sombra ao clicar */
+}
+
+
+
+</style>
 <div class="container mt-4"></div>
     <body class="d-flex flex-column h-100 cinza">
         <main class="flex-shrink-0 ">
@@ -23,10 +52,11 @@
                                 <div class="fs-3 fw-light text-muted">Plataforma de apoio para mulheres empreendedoras</div>
                                 <br>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                                    
-                                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" class="nav-link" href="{% url 'login' %}">Login</a>
-                                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="{% url 'registrar' %}">Cadastro</a>
+                                    <a class="btn btn-primary px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/login/">Login</a>
+                                    <a class="btn btn-primary px-5 py-3 me-sm-3 fs-6 fw-bolder" href="/registrar/">Cadastro</a>
+
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="col-xxl-7">
