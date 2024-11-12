@@ -1,0 +1,11 @@
+{% extends "modelo.html" %}
+{% block corpo %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px;">
+    <h1>Cadastrar Nova Categoria</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar Categoria</button>
+    </form>
+</div>
+{% endblock %}

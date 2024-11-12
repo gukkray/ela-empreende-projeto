@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comentario, ItemVenda, Venda
+from .models import Comentario, ItemVenda, Venda, Comentario, Categoria
 from gerenciar.models import Produto
 
 class AdicionarProdutoForm(forms.ModelForm):
@@ -42,3 +42,11 @@ class ComentarioForm(forms.ModelForm):
         texto = self.cleaned_data['texto']
         # Adicione suas validações personalizadas, se necessário
         return texto
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto', 'categoria']  # Inclua o campo 'categoria'
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nome', ]

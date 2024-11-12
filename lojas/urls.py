@@ -22,6 +22,10 @@ urlpatterns = [
     path('buscar-produtos-por-loja/', buscar_produtos_por_loja, name='buscar_produtos_por_loja'),
     path('select2/', include('django_select2.urls')),
     path('venda/<int:venda_id>/excluir-item/<int:item_id>/', views.excluir_item_venda, name='excluir_item_venda'),
+    path('cadastrar/categoria/', views.CategoriaCreateView.as_view(), name='cadastrar_categoria'),
+    path('comentarios/<int:categoria_id>/', views.exibir_comentarios, name='comentario'),
+    path('comentarios/<int:categoria_id>/', views.exibir_comentarios, name='exibir_comentarios'),
 
 ]
+
 
