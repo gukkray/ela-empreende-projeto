@@ -14,15 +14,29 @@ from gerenciar.models import Produto
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
-from .models import Venda, ItemVenda
+from .models import Venda, ItemVenda, Comentario, Categoria
 from .forms import AdicionarProdutoForm
 from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 from django.db.models import Count
-
+from django.db.models import Count
+from django.db.models import Q, Count
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Venda, ItemVenda
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+from .models import Comentario, Categoria
+from .forms import ComentarioForm
+from django.contrib.auth.decorators import login_required
+
+
+
 
 @login_required
 def excluir_item_venda(request, venda_id, item_id):
@@ -204,13 +218,6 @@ def listar_vendas(request):
     })
 
 
-from django.db.models import Count
-
-from django.db.models import Q, Count
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from .models import Venda, ItemVenda
-
 
 class VendaDelete(LoginRequiredMixin, DeleteView):
     login_url = '/login/'  # Substitua pela sua URL de login
@@ -288,33 +295,73 @@ class ComentarioDelete(LoginRequiredMixin, DeleteView):
     template_name = "forum/excluir_comentario.html"  # Substitua pelo seu template
     success_url = reverse_lazy('listar-comentario')  # Substitua 'listar-comentario' pelo nome da sua URL de lista de comentários
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from .models import Comentario
-from .forms import ComentarioForm
+def exibir_comentarios(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    categorias = Categoria.objects.all()  # Todas as categorias para o seletor
+    comentarios = Comentario.objects.filter(categoria=categoria)
 
-@login_required
-def exibir_comentarios(request):
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
+            comentario.categoria = categoria  # Associa o comentário à categoria selecionada
             comentario.autor = request.user
             comentario.save()
-            return redirect('exibir_comentarios')
+            return redirect('exibir_comentarios', categoria_id=categoria_id)
     else:
         form = ComentarioForm()
-        query = request.GET.get('q')
-        comentarios = Comentario.objects.all().order_by('-data_publicacao')
-        if query:
-            comentarios = comentarios.filter(
-                Q(texto__icontains=query) |
-                Q(autor__username__icontains=query)
-            ).distinct()
-    
-    return render(request, 'forum/comentario.html', {
+
+    context = {
+        'categoria': categoria,
+        'categorias': categorias,
         'comentarios': comentarios,
         'form': form,
-        'query': query,
-    })
+    }
+    return render(request, 'comentarios.html', context)
+
+
+from django.shortcuts import render, redirect
+from .forms import CategoriaForm
+from .models import Categoria
+
+
+class CategoriaCreateView(CreateView):
+    model = Categoria
+    fields = ['nome']  # Ajuste os campos de acordo com o modelo Categoria
+    template_name = 'cadastrar_categoria.html'  # Altere para o nome correto do template
+    success_url = reverse_lazy('comentario')  # Ajuste a URL de sucesso conforme necessário
+def cadastrar_categoria(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()  # Salva a nova categoria
+            return redirect('comentario')  # Redireciona para a página de comentários
+    else:
+        form = CategoriaForm()
+    return render(request, 'forum/cadastrar_categoria.html', {'form': form})
+
+def exibir_comentarios(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    comentarios = Comentario.objects.filter(categoria=categoria).order_by('-data_publicacao')
+    
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.categoria = categoria
+            comentario.autor = request.user
+            comentario.save()
+            return redirect('lojas:exibir_comentarios', categoria_id=categoria.id)
+    else:
+        form = ComentarioForm()
+
+    categorias = Categoria.objects.all()
+
+    context = {
+        'categoria': categoria,
+        'comentarios': comentarios,
+        'form': form,
+        'categorias': categorias
+    }
+    
+    return render(request, 'comentario.html', context)
