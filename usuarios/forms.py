@@ -74,7 +74,9 @@ class EnderecoForm(forms.ModelForm):
         
         fields = ['estado', 'cidade', 'endereco', 'numero', 'complemento']
     estado = forms.CharField(widget=BRStateSelect())
-
+import re
+from django import forms
+from django.core.exceptions import ValidationError
 from .models import Contato
 
 class ContatoForm(forms.ModelForm):
@@ -82,10 +84,27 @@ class ContatoForm(forms.ModelForm):
         model = Contato
         fields = ['contato', 'contato2']
         labels = { 
-             'contato': 'Adicione um contato:',
-             'contato2': 'Adicione outro contato:',
+            'contato': 'Adicione um contato:',
+            'contato2': 'Adicione outro contato:',
+        }
 
-             }
+    def clean_contato(self):
+        contato = self.cleaned_data.get('contato')
+        return self.validate_phone_number(contato)
+
+    def clean_contato2(self):
+        contato2 = self.cleaned_data.get('contato2')
+        return self.validate_phone_number(contato2)
+
+    def validate_phone_number(self, phone_number):
+        if phone_number:
+            # Remove todos os caracteres que não são números
+            phone_number_digits = re.sub(r'\D', '', phone_number)
+            if len(phone_number_digits) != 10:
+                raise ValidationError("O contato deve conter exatamente 10 números.")
+            return phone_number_digits  # Retorna apenas os números
+        return phone_number
+
 
 
 

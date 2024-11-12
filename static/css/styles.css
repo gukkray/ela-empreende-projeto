@@ -7689,7 +7689,7 @@ button.bg-dark:focus {
 
 @media (max-height: 800px) {
   .vh-100 {
-    height: 150%; /* Definindo uma altura mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nima de 600 pixels para dispositivos menores */
+    height: 150%; /* Definindo uma altura mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­nima de 600 pixels para dispositivos menores */
   }
 }
 
@@ -10739,7 +10739,7 @@ a:focus {
 }
 
 .sidebar-dark .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255 255 255);
 }
 
 .sidebar-dark .nav-item .nav-link i {

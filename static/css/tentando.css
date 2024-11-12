@@ -1030,7 +1030,9 @@ h6 {
 .profile .profile-card h2 {
   font-size: 24px;
   font-weight: 700;
+  align-text: center;
   color: #e21e80;
+  padding: 20px;
   margin: 10px 0 0 0;
 }
 
@@ -1274,26 +1276,26 @@ h6 {
     height: 100%;
     background-color: #333;
     color: #fff;
-    transition: left 0.3s ease; /* TransiÃ§Ã£o suave para animar a abertura e fechamento */
+    transition: left 0.3s ease; /* TransiÃƒÂ§ÃƒÂ£o suave para animar a abertura e fechamento */
 }
 
-/* Estilo para a barra lateral quando estÃ¡ aberta */
+/* Estilo para a barra lateral quando estÃƒÂ¡ aberta */
 body.sidebar-open .sidebar {
     left: 0;
 }
 
-/* Estilo para o conteÃºdo principal quando a sidebar estÃ¡ aberta */
+/* Estilo para o conteÃƒÂºdo principal quando a sidebar estÃƒÂ¡ aberta */
 body.sidebar-open .content {
-    margin-left: 250px; /* Ajusta o conteÃºdo principal para a direita quando a sidebar estÃ¡ aberta */
+    margin-left: 250px; /* Ajusta o conteÃƒÂºdo principal para a direita quando a sidebar estÃƒÂ¡ aberta */
 }
 
-/* Estilo para o conteÃºdo principal */
+/* Estilo para o conteÃƒÂºdo principal */
 .content {
-    margin-left: 20px; /* Margem inicial Ã  esquerda do conteÃºdo principal */
-    transition: margin-left 0.3s ease; /* TransiÃ§Ã£o suave para ajustar a margem */
+    margin-left: 20px; /* Margem inicial ÃƒÂ  esquerda do conteÃƒÂºdo principal */
+    transition: margin-left 0.3s ease; /* TransiÃƒÂ§ÃƒÂ£o suave para ajustar a margem */
 }
 
-/* Estilo para o botÃ£o de alternÃ¢ncia da sidebar */
+/* Estilo para o botÃƒÂ£o de alternÃƒÂ¢ncia da sidebar */
 .toggle-sidebar-btn {
     display: none; /* Inicialmente oculto */
     
@@ -1309,9 +1311,9 @@ body.sidebar-open .content {
     border-radius: 5px;
 }
 
-/* Estilo para o botÃ£o de alternÃ¢ncia da sidebar, visÃ­vel em telas menores que 1199px */
+/* Estilo para o botÃƒÂ£o de alternÃƒÂ¢ncia da sidebar, visÃƒÂ­vel em telas menores que 1199px */
 @media (max-width: 1199px) {
     .toggle-sidebar-btn {
-        display: block; /* Mostra o botÃ£o quando a tela for menor que 1199px */
+        display: block; /* Mostra o botÃƒÂ£o quando a tela for menor que 1199px */
     }
 }

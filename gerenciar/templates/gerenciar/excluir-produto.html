@@ -2,33 +2,19 @@
 {% load static %}
 
 {% block titulo %}
-<title>
-    Excluir Produto
-</title>
+<title>Excluir Produto</title>
 {% endblock %}
-
 
 {% block corpo %}
 <div class="container">
-    <p>
-    Confirme para exluir os produtos
-</p>
+    <p>Confirme para excluir o produto.</p>
 
-
-<h4>
-    Excluir Produtos
-</h4>
+    <h4>Excluir Produto</h4>
 
     <form action="" method="POST">
-        <p>
-            Deseja excluir: <b> {{ object }}? </b>
-        </p>
+        <p>Deseja excluir: <b>{{ object }}?</b></p>
         {% csrf_token %}
-
-
-        {{ form.as_p }}
-        <button type="submit" class="btn  btn-danger">Excluir</button>
-
+        <button type="submit" class="btn btn-danger">Excluir</button>
     </form>
 </div>
 {% endblock %}
