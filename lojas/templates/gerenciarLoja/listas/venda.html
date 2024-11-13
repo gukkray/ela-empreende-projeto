@@ -1,21 +1,17 @@
 {% extends "modelo.html" %}
 {% load static %}
 {% load tz %}
+
 {% block titulo %}
     <title>Listar Vendas</title>
 {% endblock %}
 
 {% block corpo %}
 <div class="container">
-    <a href="{% url 'iniciar_venda' %}"  class="btn btn-primary btn-sm" style="margin-bottom: 1% ;">Adicionar Venda</a>
-    
-
     {% if success_message %}
     <hr>
     <div class="alert alert-success" id="success-message">{{ success_message }}</div>
     {% endif %}
-
-    <p>Total de produtos listados em vendas: {{ total_produtos }}</p>
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -24,7 +20,8 @@
                     <th>Produtos</th>
                     <th>Quantidade</th>
                     <th>Valor Total</th>
-                    <th>Data de criaçãoo</th>
+                    <th>Data de Criação</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,19 +43,24 @@
                     </td>
                     <td>{{ venda.total }}</td>
                     <td>{{ venda.data_criacao }}</td>
-
-                    <td> <a href="{% url 'excluir_venda' venda.pk %}" class="btn btn-danger btn-sm ladoo" title="Editar"> Excluir </a>
+                    <td>
+                        <a href="{% url 'excluir_venda' venda.pk %}" class="btn btn-danger btn-sm ladoo" title="Excluir">Excluir</a>
                     </td>
                 </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="3">Nenhuma venda registrada.</td>
+                        <td colspan="5">Nenhuma venda registrada.</td>
                     </tr>
                 {% endfor %}
+                
+                <!-- Adicionando botão "Adicionar Venda" após a última linha da tabela -->
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <a href="{% url 'iniciar_venda' %}" class="btn btn-primary btn-sm">Adicionar Venda</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-
-
 </div>
 {% endblock %}
