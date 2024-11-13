@@ -290,7 +290,7 @@ from .forms import ComentarioForm
 def exibir_comentarios(request, categoria_id=None):
     # Se categoria_id for None, pega a primeira categoria ou redireciona para a primeira disponível
     if categoria_id is None:
-        categoria = Categoria.objects.first()  # Garante que ao menos uma categoria seja selecionada
+        categoria = Categoria.objects.first()
         if not categoria:
             return redirect('alguma_categoria_padrão')  # Redireciona para uma categoria padrão
         return redirect('exibir_comentarios', categoria_id=categoria.id)
@@ -306,7 +306,10 @@ def exibir_comentarios(request, categoria_id=None):
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)  # Cria o comentário mas não salva ainda
-            comentario.categoria = categoria  # Associa a categoria ao comentário
+            # Aqui, pegamos o valor da categoria selecionada
+            categoria_id_post = request.POST.get('categoria')
+            if categoria_id_post:
+                comentario.categoria = Categoria.objects.get(id=categoria_id_post)  # Ajuste aqui
             comentario.autor = request.user  # Associa o autor ao comentário
             comentario.save()  # Salva o comentário no banco
             return redirect('exibir_comentarios', categoria_id=categoria.id)  # Redireciona para a mesma categoria

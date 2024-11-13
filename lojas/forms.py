@@ -40,8 +40,5 @@ def get_comentario_model():
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
-        fields = ['texto', 'categoria']  # Ou apenas 'texto' se a categoria for selecionada na view
-        widgets = {
-            'texto': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escreva seu comentário aqui...'}),
-        }
-        categoria = forms.ModelChoiceField(queryset=Categoria.objects.all())
+        fields = ['texto', 'categoria']  # Inclui 'categoria' se estiver usando o seletor no formulário
+    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
