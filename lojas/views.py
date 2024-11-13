@@ -231,7 +231,6 @@ class VendaList(LoginRequiredMixin, ListView):
                 Q(itens_produto_nome__icontains=query) |  # Filtra pelo nome do produto nos itens da venda
                 Q(total__icontains=query)  # Filtra pelo código de barras do produto nos itens da venda
             ).distinct()  # Utiliza distinct para evitar duplicatas
-            
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -243,22 +242,22 @@ class VendaList(LoginRequiredMixin, ListView):
 class CategoriaCreateView(CreateView):
     model = Categoria
     fields = ['nome']  # Ajuste os campos de acordo com o modelo Categoria
-    template_name = 'cadastrar_categoria.html'  # Altere para o nome correto do template
-    success_url = reverse_lazy('comentario')  # Ajuste a URL de sucesso conforme necessário
+    template_name = 'forum/cadastrar_categoria.html'  # Altere para o nome correto do template
+    success_url = reverse_lazy('exibir_comentarios', kwargs={'categoria_id': 1})  # Defina o ID padrão aqui
 def cadastrar_categoria(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
         if form.is_valid():
             form.save()  # Salva a nova categoria
-            return redirect('comentario')  # Redireciona para a página de comentários
+            return redirect('exibir_comentarios', kwargs={'categoria_id': 1})  # Redireciona para a página de comentários
     else:
         form = CategoriaForm()
-    return render(request, 'forum/cadastrar_categoria.html', {'form': form})
+    return render(request, 'forum/cadastrar_categoria.html', {'form': form}, kwargs={'categoria_id': 1})
 
 class ComentarioCreate(LoginRequiredMixin, CreateView):
     login_url = '/login/'  # Substitua pela sua URL de login
     model = Comentario
-    template_name = "forum/comentario.html"  # Substitua pelo seu template
+    template_name = "forum/comentarios.html"  # Substitua pelo seu template
     form_class = ComentarioForm
     success_url = reverse_lazy('cadastrar-comentario')  # Substitua 'listar-comentario' pelo nome da sua URL de lista de comentários
 
@@ -284,29 +283,41 @@ class ComentarioDelete(LoginRequiredMixin, DeleteView):
     template_name = "forum/excluir_comentario.html"  # Substitua pelo seu template
     success_url = reverse_lazy('listar-comentario')  # Substitua 'listar-comentario' pelo nome da sua URL de lista de comentários
 
-def exibir_comentarios(request, categoria_id):
-    # Recupera a categoria com base no ID
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Categoria, Comentario
+from .forms import ComentarioForm
+
+def exibir_comentarios(request, categoria_id=None):
+    # Se categoria_id for None, pega a primeira categoria ou redireciona para a primeira disponível
+    if categoria_id is None:
+        categoria = Categoria.objects.first()  # Garante que ao menos uma categoria seja selecionada
+        if not categoria:
+            return redirect('alguma_categoria_padrão')  # Redireciona para uma categoria padrão
+        return redirect('exibir_comentarios', categoria_id=categoria.id)
+
+    # Obtém a categoria ou retorna 404 se não encontrada
     categoria = get_object_or_404(Categoria, id=categoria_id)
 
-    # Recupera todos os comentários dessa categoria, ordenados pela data
+    # Obtém os comentários da categoria ordenados pela data de publicação
     comentarios = Comentario.objects.filter(categoria=categoria).order_by('data_publicacao')
 
-    # Se o formulário for enviado (POST), cria e salva um novo comentário
+    # Processa o envio do formulário de comentário
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
-            comentario = form.save(commit=False)
-            comentario.categoria = categoria
-            comentario.autor = request.user  # Assumindo que o autor é o usuário logado
-            comentario.save()
-            return redirect('exibir_comentarios', categoria_id=categoria.id)  # Redireciona para a mesma página para mostrar o comentário recém-adicionado
+            comentario = form.save(commit=False)  # Cria o comentário mas não salva ainda
+            comentario.categoria = categoria  # Associa a categoria ao comentário
+            comentario.autor = request.user  # Associa o autor ao comentário
+            comentario.save()  # Salva o comentário no banco
+            return redirect('exibir_comentarios', categoria_id=categoria.id)  # Redireciona para a mesma categoria
+
     else:
         form = ComentarioForm()
 
-    # Passa a categoria, os comentários e o formulário para o template
-    return render(request, 'comentarios.html', {
+    # Retorna a renderização da página com os dados necessários
+    return render(request, 'forum/comentarios.html', {
         'categoria': categoria,
         'comentarios': comentarios,
         'form': form,
-        'categorias': Categoria.objects.all()  # Para preencher o seletor de categorias
+        'categorias': Categoria.objects.all(),  # Para preencher o seletor de categorias
     })

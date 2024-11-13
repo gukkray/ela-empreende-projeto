@@ -9,7 +9,6 @@ urlpatterns = [
     path('cadastrar/comentario/', ComentarioCreate.as_view(), name='cadastrar-comentario'),
     path('editar/comentario/<int:pk>/', ComentarioUpdate.as_view(), name='editar-comentario'),
     path('excluir/comentario/<int:pk>/', ComentarioDelete.as_view(), name='excluir-comentario'),
-    path('comentarios/', exibir_comentarios, name='exibir_comentarios'),
 
     path('buscar-produto/', buscar_produto, name='buscar_produto'),
     path('iniciar-venda/', iniciar_venda, name='iniciar_venda'),

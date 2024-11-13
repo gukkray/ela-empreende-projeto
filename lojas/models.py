@@ -44,7 +44,7 @@ class Comentario(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField(help_text="Conteúdo do comentário")
     data_publicacao = models.DateTimeField(auto_now_add=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='comentarios')
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     comentario_resposta = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='respostas')
 
     def __str__(self):

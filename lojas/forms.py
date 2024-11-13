@@ -44,3 +44,4 @@ class ComentarioForm(forms.ModelForm):
         widgets = {
             'texto': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escreva seu comentário aqui...'}),
         }
+        categoria = forms.ModelChoiceField(queryset=Categoria.objects.all())
