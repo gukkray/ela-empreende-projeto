@@ -74,6 +74,19 @@
                     <h3>{{ comentario.autor.username }}</h3>
                     <p>{{ comentario.texto }}</p>
                     <small>Publicado em {{ comentario.data_publicacao }}</small>
+
+                    <!-- Exibe respostas ao comentário -->
+                    {% for resposta in comentario.respostas.all %}
+                        <div class="card mt-2 ml-4">
+                            <div class="card-body">
+                                <h5>{{ resposta.autor.username }}</h5>
+                                <p>{{ resposta.texto }}</p>
+                                <small>Publicado em {{ resposta.data_publicacao }}</small>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>Sem respostas.</p>
+                    {% endfor %}
                 </div>
             </div>
         {% empty %}
@@ -82,24 +95,22 @@
     </div>
 
     <!-- Área do formulário para adicionar comentário -->
-    <div class="comment-area">
-        <form method="post" action="{% url 'exibir_comentarios' categoria.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <!-- Selecionar categoria (opcional) -->
-            <label for="categoria">Escolha uma Categoria:</label>
-            <select name="categoria" id="categoria">
-                {% for cat in categorias %}
-                    <option value="{{ cat.id }}" {% if cat.id == categoria.id %}selected{% endif %}>{{ cat.nome }}</option>
-                {% endfor %}
-            </select>
-            <!-- Botão de envio -->
-            <button type="submit" class="btn btn-primary btn-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send tras" viewBox="0 0 16 16">
-                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
-                </svg>
-            </button>
-        </form>
-    </div>
+    <form method="post" action="{% url 'exibir_comentarios' categoria.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+    
+        <label for="categoria">Escolha uma Categoria:</label>
+        <select name="categoria" id="categoria">
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if cat.id == categoria.id %}selected{% endif %}>{{ cat.nome }}</option>
+            {% endfor %}
+        </select>
+    
+        <button type="submit" class="btn btn-primary btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send tras" viewBox="0 0 16 16">
+                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+            </svg>
+        </button>
+    </form>
 </div>
 {% endblock %}

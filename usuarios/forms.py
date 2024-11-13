@@ -3,8 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from .models import Empresa  # Import your Empresa model
 from localflavor.br.forms import BRStateSelect
+from .models import Empresa, Endereco, Contato, Links
+from localflavor.br.forms import BRStateSelect
+from localflavor.br.br_states import STATE_CHOICES
 
 
 class UsuarioForms(UserCreationForm):
@@ -12,19 +14,12 @@ class UsuarioForms(UserCreationForm):
     email = forms.EmailField(label="E-mail")
     descricao = forms.CharField(max_length=255, label="Descrição", required=False)
     imagem = forms.ImageField(label="Imagem", required=False)
-    password1 = forms.CharField(
-        label="Senha",
-        widget=forms.PasswordInput,
-    )
-    password2 = forms.CharField(
-        label="Confirme a senha",
-        widget=forms.PasswordInput,
-    )
+    password1 = forms.CharField(label="Senha", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Confirme a senha", widget=forms.PasswordInput)
 
     class Meta:
         model = User
         fields = ['username', 'nome', 'email', 'descricao', 'imagem', 'password1', 'password2']
-
         labels = {
             'username': 'Usuário:',
             'nome': 'Nome:',
@@ -66,24 +61,19 @@ class EditProfileForm(forms.ModelForm):
         self.fields['remover_imagem'].widget.attrs.update({'class': 'form-check-input'})
 
 
-from .models import Endereco
-
 class EnderecoForm(forms.ModelForm):
+    estado = forms.ChoiceField(choices=STATE_CHOICES, label="Estado")  # Define choices here
+
     class Meta:
         model = Endereco
-        
         fields = ['estado', 'cidade', 'endereco', 'numero', 'complemento']
-    estado = forms.CharField(widget=BRStateSelect())
-import re
-from django import forms
-from django.core.exceptions import ValidationError
-from .models import Contato
+
 
 class ContatoForm(forms.ModelForm):
     class Meta:
         model = Contato
         fields = ['contato', 'contato2']
-        labels = { 
+        labels = {
             'contato': 'Adicione um contato:',
             'contato2': 'Adicione outro contato:',
         }
@@ -98,36 +88,27 @@ class ContatoForm(forms.ModelForm):
 
     def validate_phone_number(self, phone_number):
         if phone_number:
-            # Remove todos os caracteres que não são números
             phone_number_digits = re.sub(r'\D', '', phone_number)
             if len(phone_number_digits) != 10:
                 raise ValidationError("O contato deve conter exatamente 10 números.")
-            return phone_number_digits  # Retorna apenas os números
+            return phone_number_digits
         return phone_number
 
-
-
-
-from django import forms
-from .models import Contato
 
 class ExcluirContatoForm(forms.Form):
     contato = forms.BooleanField(required=False)
     contato2 = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
-        usuario = kwargs.pop('usuario', None)  
+        usuario = kwargs.pop('usuario', None)
         super(ExcluirContatoForm, self).__init__(*args, **kwargs)
 
         if usuario:
             if not usuario.contato.contato:
-                del self.fields['contato']  
+                del self.fields['contato']
             if not usuario.contato.contato2:
-                del self.fields['contato2']  
-    
+                del self.fields['contato2']
 
-
-from .models import Links
 
 class LinksForm(forms.ModelForm):
     class Meta:
@@ -137,14 +118,8 @@ class LinksForm(forms.ModelForm):
             'linksfacebook': 'Adicione o link do facebook',
             'linksinstagram': 'Adicione o link do instagram',
             'linkswhatsapp': 'Adicione o link do whatsapp',
-            }
+        }
 
-
-
-
-
-from django import forms
-from .models import Links
 
 class ExcluirLinksForm(forms.Form):
     linksfacebook = forms.BooleanField(required=False)
@@ -152,13 +127,13 @@ class ExcluirLinksForm(forms.Form):
     linkswhatsapp = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
-        usuario = kwargs.pop('usuario', None)  # Obtém o usuário passado como argumento
+        usuario = kwargs.pop('usuario', None)
         super(ExcluirLinksForm, self).__init__(*args, **kwargs)
 
         if usuario:
             if not usuario.links.linksfacebook:
-                del self.fields['linksfacebook']  # Remove o campo linksfacebook
+                del self.fields['linksfacebook']
             if not usuario.links.linksinstagram:
-                del self.fields['linksinstagram']  # Remove o campo linksinstagram
+                del self.fields['linksinstagram']
             if not usuario.links.linkswhatsapp:
-                del self.fields['linkswhatsapp']  # Remove o campo linkswhatsapp
+                del self.fields['linkswhatsapp']

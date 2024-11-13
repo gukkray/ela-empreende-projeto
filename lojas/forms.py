@@ -2,6 +2,7 @@ from django import forms
 from .models import Comentario, ItemVenda, Venda, Comentario, Categoria
 from gerenciar.models import Produto
 
+
 class AdicionarProdutoForm(forms.ModelForm):
     class Meta:
         model = ItemVenda
@@ -28,25 +29,18 @@ class VendaForm(forms.ModelForm):
         user = kwargs.pop('user', None)  # Obtém o usuário passado para o formulário
         super().__init__(*args, **kwargs)
         
-
-class ComentarioForm(forms.ModelForm):
-    class Meta:
-        model = Comentario
-        fields = ['texto']
-        labels = {'texto': 'Comentário'}
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def clean_texto(self):
-        texto = self.cleaned_data['texto']
-        # Adicione suas validações personalizadas, se necessário
-        return texto
-class ComentarioForm(forms.ModelForm):
-    class Meta:
-        model = Comentario
-        fields = ['texto', 'categoria']  # Inclua o campo 'categoria'
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = ['nome', ]
+
+def get_comentario_model():
+    from .models import Comentario 
+    return Comentario
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto', 'categoria']  # Ou apenas 'texto' se a categoria for selecionada na view
+        widgets = {
+            'texto': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escreva seu comentário aqui...'}),
+        }
