@@ -9,7 +9,7 @@
 <div>
     <section id="gallery">
         <div class="container">
-            <a href="{% url 'cadastrar-produto' %}" class="btn btn-primary btn-sm">Adicionar Produto</a>
+            <h4>Produtos cadastrados</h4> <!-- Título no topo da página -->
             <hr>
             <div class="row">
                 {% for produto in produtos %}
@@ -40,9 +40,9 @@
                         </div>
                     </div>
                 {% empty %}
-                    <tr>
-                        <td colspan="7">Nenhum produto registrado.</td>
-                    </tr>
+                    <div class="col-12 text-center">
+                        <p>Nenhum produto registrado.</p>
+                    </div>
                 {% endfor %}
             </div>
         </div>
