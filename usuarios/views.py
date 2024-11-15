@@ -14,6 +14,10 @@ from django.contrib.auth.decorators import login_required
 from gerenciar.models import Produto
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
+from django.contrib.auth.views import PasswordResetView
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'password_reset_subject.txt'
 
 
 

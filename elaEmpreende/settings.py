@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'tarefas.apps.TarefasConfig',
     'clientes.apps.ClientesConfig',
     'financeiro.apps.FinanceiroConfig',
-    
-    
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -76,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'elaEmpreende.context_processors.global_message',
+
             ],
         },
     },
