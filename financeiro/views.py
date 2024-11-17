@@ -8,6 +8,7 @@ from .forms import MovimentacaoForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Movimentacao
+from django.db.models import Sum
 
 class SaidaCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login') 
@@ -75,16 +76,23 @@ def listar_Movimentacoes(request):
 
 
 def obter_dados_entrada(request):
-    dados_entrada = Movimentacao.objects.filter(valor__gte=0, usuario=request.user)
-    dados_json = [{'data': movimentacao.data, 'valor': movimentacao.valor} for movimentacao in dados_entrada]
-   
+    dados_entrada = (
+        Movimentacao.objects.filter(valor__gte=0, usuario=request.user)
+        .values('data')
+        .annotate(total=Sum('valor'))
+        .order_by('data')
+    )
+    dados_json = [{'data': item['data'], 'valor': float(item['total'])} for item in dados_entrada]
     return JsonResponse(dados_json, safe=False)
 
 def obter_dados_saida(request):
-    dados_saida = Movimentacao.objects.filter(valor__lt=0, usuario=request.user)
-    
-    dados_json = [{'data': movimentacao.data, 'valor': movimentacao.valor} for movimentacao in dados_saida]
-    
+    dados_saida = (
+        Movimentacao.objects.filter(valor__lt=0, usuario=request.user)
+        .values('data')
+        .annotate(total=Sum('valor'))
+        .order_by('data')
+    )
+    dados_json = [{'data': item['data'], 'valor': float(item['total'])} for item in dados_saida]
     return JsonResponse(dados_json, safe=False)
 
 def tipo_movimentacao(request):
