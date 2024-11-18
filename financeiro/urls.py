@@ -13,4 +13,5 @@ urlpatterns = [
     path('obter-dados-entrada/', obter_dados_entrada, name='obter-dados-entrada'),
     path('obter-dados-saida/', obter_dados_saida, name='obter-dados-saida'),
     path('tipo-movimentacao/', views.tipo_movimentacao, name='tipo-movimentacao'),
+    path('grafico/', views.exibir_grafico, name='grafico'),
 ]

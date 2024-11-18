@@ -67,6 +67,9 @@ class EntradaList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Movimentacao.objects.filter(usuario=self.request.user)
 
+@login_required
+def exibir_grafico(request):
+    return render(request, 'grafico.html')
 
 @login_required
 def listar_Movimentacoes(request):

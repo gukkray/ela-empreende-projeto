@@ -1,0 +1,135 @@
+{% extends "modelo.html" %}
+{% load static %}
+{% block estilos %}
+<title>Gráfico de Barras</title>
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px; /* Ajusta a distância do menu */
+  }
+  .card {
+    width: 80%; /* Adapta ao tamanho da página */
+    max-width: 800px; /* Limita a largura máxima */
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+  }
+  canvas {
+    width: 100% !important;
+    height: 400px !important; /* Define uma altura fixa para o gráfico */
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+{% endblock %}
+
+{% block corpo %}
+<div class="container">
+  <div class="card">
+    <div class="card-title">Gráfico de Entradas e Saídas</div>
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+  let dataset1Data, dataset2Data, dataset1Labels, dataset2Labels;
+
+  // Obtendo os dados de entrada
+  fetch('/obter-dados-entrada/')
+      .then(response => response.json())
+      .then(data => {
+          dataset1Data = data.map(item => item.valor); // Extrair os valores
+          dataset1Labels = data.map(item => item.data); // Extrair as datas
+          updateChart(); // Atualizar o gráfico
+      });
+
+  // Obtendo os dados de saída
+  fetch('/obter-dados-saida/')
+      .then(response => response.json())
+      .then(data => {
+          dataset2Data = data.map(item => item.valor); // Extrair os valores
+          dataset2Labels = data.map(item => item.data); // Extrair as datas
+          updateChart(); // Atualizar o gráfico
+      });
+
+  // Função para atualizar o gráfico
+  function updateChart() {
+      if (dataset1Data && dataset2Data && dataset1Labels && dataset2Labels) {
+          const labels = [...new Set([...dataset1Labels, ...dataset2Labels])]; // Unir e remover datas duplicadas
+          const data1 = mapDataToLabels(dataset1Data, dataset1Labels, labels);
+          const data2 = mapDataToLabels(dataset2Data, dataset2Labels, labels);
+
+          new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: labels,
+                  datasets: [
+                      {
+                          label: 'Entradas',
+                          data: data1,
+                          backgroundColor: 'rgba(230, 230, 250, 1)', 
+                          borderColor: 'rgba(180, 180, 200, 1)',
+                          borderWidth: 1
+                      },
+                      {
+                          label: 'Saídas',
+                          data: data2,
+                          backgroundColor: 'rgba(230, 150, 250, 1)',
+                          borderColor: 'rgba(230, 150, 250, 1)',
+                          borderWidth: 1
+                      }
+                  ]
+              },
+              options: {
+                  scales: {
+                      y: {
+                          beginAtZero: true
+                      }
+                  },
+                  plugins: {
+                      annotation: {
+                          annotations: {
+                              line1: {
+                                  type: 'line',
+                                  yMin: 0,
+                                  yMax: 0,
+                                  borderColor: 'rgba(100, 100, 100, 1)',
+                                  borderWidth: 2,
+                                  label: {
+                                      enabled: true,
+                                      content: 'Separador'
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      }
+  }
+
+  // Função para associar os dados às datas corretas
+  function mapDataToLabels(data, labels, targetLabels) {
+      return targetLabels.map(label => {
+          const index = labels.indexOf(label);
+          return index !== -1 ? data[index] : 0;
+      });
+  }
+</script>
+{% endblock %}
