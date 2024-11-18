@@ -298,7 +298,12 @@ def exibir_comentarios(request, categoria_id=None):
         if not categoria:
             return redirect('alguma_categoria_padrão')  # Redireciona para uma categoria padrão
         return redirect('exibir_comentarios', categoria_id=categoria.id)
-
+        # Filtrar por categoria, se selecionada
+        categorias = Categoria.objects.all()
+    categorias = Categoria.objects.all()
+    comentarios = Comentario.objects.all
+    if categoria_id:
+        comentarios = comentarios.filter(categoria_id=categoria_id)
     # Obtém a categoria ou retorna 404 se não encontrada
     categoria = get_object_or_404(Categoria, id=categoria_id)
 
@@ -327,4 +332,7 @@ def exibir_comentarios(request, categoria_id=None):
         'comentarios': comentarios,
         'form': form,
         'categorias': Categoria.objects.all(),  # Para preencher o seletor de categorias
+        'categoria_selecionada': categoria_id,
+
     })
+

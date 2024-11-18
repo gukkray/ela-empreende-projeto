@@ -62,6 +62,22 @@
 <div class="container">
     <!-- Exibe o nome da categoria selecionada -->
     <h1>Comentários para a Categoria: {{ categoria.nome }}</h1> 
+    <!-- Botão para exibir categorias -->
+    <button onclick="toggleDropdown()">Selecionar Categoria</button>
+
+    <!-- Campo de busca e lista de categorias -->
+    <div id="dropdown" class="hidden">
+        <input type="text" id="searchInput" onkeyup="filterCategories()" placeholder="Buscar categoria...">
+        <ul id="categoryList">
+            {% for categoria in categorias %}
+            <li>
+                <a href="{% url 'exibir_comentarios' categoria.id %}">
+                    {{ categoria.nome }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <!-- Link para cadastrar nova categoria -->
     <a href="{% url 'cadastrar_categoria' %}" class="btn btn-secondary">Cadastrar nova categoria</a>
