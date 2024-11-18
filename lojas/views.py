@@ -301,7 +301,7 @@ def exibir_comentarios(request, categoria_id=None):
         # Filtrar por categoria, se selecionada
         categorias = Categoria.objects.all()
     categorias = Categoria.objects.all()
-    comentarios = Comentario.objects.all
+    comentarios = Comentario.objects.all()
     if categoria_id:
         comentarios = comentarios.filter(categoria_id=categoria_id)
     # Obtém a categoria ou retorna 404 se não encontrada
