@@ -288,6 +288,10 @@ from .models import Categoria, Comentario
 from .forms import ComentarioForm
 
 def exibir_comentarios(request, categoria_id=None):
+        # Verifica se existem categorias no banco de dados
+    if not Categoria.objects.exists():
+        # Cria a categoria "Geral" se nenhuma categoria existir
+        Categoria.objects.create(nome="Geral")
     # Se categoria_id for None, pega a primeira categoria ou redireciona para a primeira disponível
     if categoria_id is None:
         categoria = Categoria.objects.first()
