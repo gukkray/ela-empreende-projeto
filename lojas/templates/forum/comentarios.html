@@ -158,7 +158,7 @@
     <!-- Exibe o nome da categoria selecionada -->
     <h1>Comentários da categoria {{ categoria.nome }}</h1>
     <!-- Botão para exibir categorias -->
-    <select class="form-select" aria-label="Selecione uma categoria" onchange="window.location.href=this.value;">
+    <select class="form-select" aria-label="Selecione uma categoria que deseja ver. " onchange="window.location.href=this.value;">
         <option selected>Selecione uma categoria</option>
         {% for categoria in categorias %}
         <option value="{% url 'exibir_comentarios' categoria.id %}">
