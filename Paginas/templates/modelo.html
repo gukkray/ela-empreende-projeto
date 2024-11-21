@@ -177,11 +177,13 @@
                         <div style="margin: 10%;">
                             <!-- Verifique se essa lógica de template está funcionando corretamente -->
 
-                            {% if usuario.empresa.imagem %}
-                            <img src="{{ usuario.empresa.imagem.url }}" alt="img" class="rounded-circle">
+                            {% if user.empresa.imagem %}
+                            <img src="{{ request.user.empresa.imagem.url }}" alt="Foto de Perfil" width="40px"
+                                height="120px" style="object-fit: cover; border-radius: 50%; border: 2px solid #e5378e;"
+                                class="rounded-circle">
                             {% else %}
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                class="bi bi-person-circle rounded-circle" viewBox="0 0 16 16">
+                                class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                 <path fill-rule="evenodd"
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
@@ -234,18 +236,22 @@
 
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'perfil_usuario' request.user.username %}" style="display: inline;">
+                            <a class="dropdown-item d-flex align-items-center"
+                                href="{% url 'perfil_usuario' request.user.username %}" style="display: inline;">
                                 <i>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
-                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5" />
+                                        <path
+                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     </svg>
                                 </i>
                                 {% csrf_token %}
                                 <span>Editar Perfil</span>
                             </a>
                         </li>
-                                            
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -285,24 +291,26 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="sidebar-nav">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
-            href="{% url 'perfil_usuario' username=user.username %}">
-            <div class="sidebar-brand-icon">
-                {% if user.profile.imagem %}
-                    <img src="{{ user.profile.imagem.url }}" width="40" height="40" alt="Profile" class="rounded-circle">
-                {% else %}
+                href="{% url 'perfil_usuario' username=user.username %}">
+                <div class="sidebar-brand-icon">
+                    {% if user.empresa.imagem %}
+                    <img src="{{ user.empresa.imagem.url }}" width="40" height="40" alt="Profile"
+                        class="rounded-circle">
+                    {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-                {% endif %}
-            </div>
-            <div class="sidebar-brand-text mx-3">{{ user.username }}</div>
-                </a>
+                    {% endif %}
 
-                <hr class="sidebar-divider my-0">
-                <br>
+                </div>
+                <div class="sidebar-brand-text mx-3">{{ user.username }}</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+            <br>
             <li class="nav-item">
                 <a class="nav-link " href="{% url 'inicio' %}" aria-expanded="true" aria-controls="collapseUtilities">
                     <!-- <i class="fas fa-fw fa-wrench"></i> -->
