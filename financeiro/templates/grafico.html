@@ -39,11 +39,14 @@
 {% endblock %}
 
 {% block corpo %}
+
 <div class="container">
+    
   <div class="card">
     <div class="card-title">Gráfico de Entradas e Saídas</div>
     <canvas id="myChart"></canvas>
   </div>
+  <a href="{% url 'tipo-movimentacao' %}"  class="btn btn-primary btn-sm"> Adicionar movimentacao </a>
 </div>
 
 <script>
