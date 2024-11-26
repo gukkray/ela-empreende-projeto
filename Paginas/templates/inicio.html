@@ -2,6 +2,8 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+
+
 {% block titulo %}
 <title>Inicio</title>
 {% endblock %}
@@ -12,31 +14,83 @@
 <link rel="stylesheet" href="{% static 'css/calendario/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-.cards-column {
+    .cards-column {
         float: left;
         width: 100%;
         height: 100px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-end;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 20px; /* Espaço entre os cards */
+        justify-content: flex-start;
     }
 
     .calendar-column {
-        float: left;
-        width: 50%;
-        margin-top: -100px;
-        padding: 0 10px; /* corrigido */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
     }
 
     @media screen and (max-width: 768px) {
-        .cards-column,
-        .calendar-column {
-            float: none;
+        .calendar-column, .cards-column {
             width: 100%;
+            justify-content: center;
         }
     }
+
+    .card {
+        flex: 1 1 calc(33.333% - 20px); /* Cards ocupam 33.333% do espaço em telas grandes */
+        min-width: 250px; /* Definir uma largura mínima */
+    }
     
-    
+    .calendar-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .calendar {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    /* Media Query para telas menores que 480px */
+    @media screen and (max-width: 521px) {
+        .cards-column {
+        flex-direction: column;
+        gap: 10px;
+        width: 20px;
+        height: 120px;
+    }
+
+        .card {
+            flex: 1 1 100%; /* Cada card ocupa 100% do espaço disponível */
+            min-width: 100%; /* Cards ocupam toda a largura */
+        }
+
+        .calendar-column {
+            margin-top: 10px;
+            padding: 10px;
+        }
+
+        .calendar-container {
+            margin: 0 auto; /* Centraliza o calendário */
+        }
+
+        .calendar {
+            width: 100%;
+            max-width: 100%; /* Calendário ocupa 100% da largura disponível */
+        }
+    }
 </style>
 {% endblock %}
 
@@ -44,50 +98,46 @@
 <div class="container">
     <div class="cards-column">
         <!-- Card de Produtos -->
-        <div class="col-xl-3 col-md-6 mb-1">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Produtos</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_produtos }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-ui-checks" viewBox="0 0 16 16">
-                                <path
-                                    d="M7 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zM2 1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm0 8a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2zm.854-3.646a.5.5 0 0 1-.708 0l-1-1a.5.5 0 1 1 .708-.708l.646.647 1.646-1.647a.5.5 0 1 1 .708.708zm0 8a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 .708-.708l.646.647 1.646-1.647a.5.5 0 0 1 .708.708zM7 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
-                            </svg>
-                        </div>
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Produtos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_produtos }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-ui-checks" viewBox="0 0 16 16">
+                            <path
+                                d="M7 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zM2 1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm0 8a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2zm.854-3.646a.5.5 0 0 1-.708 0l-1-1a.5.5 0 1 1 .708-.708l.646.647 1.646-1.647a.5.5 0 1 1 .708.708zm0 8a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 .708-.708l.646.647 1.646-1.647a.5.5 0 0 1 .708.708zM7 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                        </svg>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Card de Vendas -->
-        <div class="col-xl-3 col-md-6 mb-1">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Vendas</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_vendas }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-check-lg" viewBox="0 0 16 16">
-                                <path
-                                    d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
-                            </svg>
-                        </div>
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Vendas</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_vendas }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-check-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                        </svg>
                     </div>
                 </div>
             </div>
         </div>
-    <!-- Card de Conversas -->
-    <div class="col-xl-3 col-md-6 mb-1">
+        
+        <!-- Card de Mensagens -->
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -107,75 +157,77 @@
             </div>
         </div>
     </div>
-</div>
-    <div>
+
+    <!-- Calendário -->
     <div class="calendar-column">
         <section class="ftco-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="content w-100">
-                            <div class="calendar-container">
-                                <div class="calendar">
-                                    <div class="year-header">
-                                        <span class="left-button fa" id="prev">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
-                                              </svg>    
-                                        </span>
-                                        <span class="year" id="label"></span>
-                                        <span class="right-button fa">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
-                                              </svg>    
-                                        </span>
-                                    </div>
-                                    <table class="months-table w-100">
-                                        <tbody>
-                                            <tr class="months-row">
-                                                <td class="month">Jan</td>
-                                                <td class="month">Fev</td>
-                                                <td class="month">Mar</td>
-                                                <td class="month">Abr</td>
-                                                <td class="month">Mai</td>
-                                                <td class="month">Jun</td>
-                                                <td class="month">Jul</td>
-                                                <td class="month">Ago</td>
-                                                <td class="month">Set</td>
-                                                <td class="month">Otu</td>
-                                                <td class="month">Nov</td>
-                                                <td class="month">Dez</td>
-                                            </tr>
+                        <div class="calendar-container">
+                            <div class="calendar">
+                                <div class="year-header">
+                                    <span class="left-button fa" id="prev">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                                          </svg>    
+                                    </span>
+                                    <span class="year" id="label"></span>
+                                    <span class="right-button fa">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                                          </svg>    
+                                    </span>
+                                </div>
+                                <table class="months-table w-100">
+                                    <tbody>
+                                        <tr class="months-row">
+                                            <td class="month">Jan</td>
+                                            <td class="month">Fev</td>
+                                            <td class="month">Mar</td>
+                                            <td class="month">Abr</td>
+                                            <td class="month">Mai</td>
+                                            <td class="month">Jun</td>
+                                            <td class="month">Jul</td>
+                                            <td class="month">Ago</td>
+                                            <td class="month">Set</td>
+                                            <td class="month">Otu</td>
+                                            <td class="month">Nov</td>
+                                            <td class="month">Dez</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="days-table w-100">
+                                    <td class="day">Dom</td>
+                                    <td class="day">Seg</td>
+                                    <td class="day">Ter</td>
+                                    <td class="day">Qua</td>
+                                    <td class="day">Qui</td>
+                                    <td class="day">Sex</td>
+                                    <td class="day">Sab</td>
+                                </table>
+                                <div class="frame">
+                                    <table class="dates-table w-100">
+                                        <tbody class="tbody">
                                         </tbody>
                                     </table>
-
-                                    <table class="days-table w-100">
-                                        <td class="day">Dom</td>
-                                        <td class="day">Seg</td>
-                                        <td class="day">Ter</td>
-                                        <td class="day">Qua</td>
-                                        <td class="day">Qui</td>
-                                        <td class="day">Sex</td>
-                                        <td class="day">Sab</td>
-                                    </table>
-                                    <div class="frame">
-                                        <table class="dates-table w-100">
-                                            <tbody class="tbody">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <a class="button" href="{% url 'cadastrar-tarefa' %}">Adicionar Tarefas</a>
                                 </div>
+                                <a class="button" href="{% url 'cadastrar-tarefa' %}">Adicionar Tarefas</a>
                             </div>
-                            
                         </div>
+                        
+                    </div>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-</div></div>
+</div>
 {% endblock %}
+
 
 {% block scripts %}
 <script src="{% static 'js/calendario/jquery.min.js' %}"></script>
