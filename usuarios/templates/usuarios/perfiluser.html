@@ -46,5 +46,32 @@
         <h5 class="my-4">Nenhuma empreendedora registrada.</h5>
         {% endfor %}
     </div>
+
+    <div class="pagination">
+        <ul class="pagination-list">
+            {% if empresas.has_previous %}
+                <li><a href="?page=1" class="pagination-link">Anterior</a></li>
+            {% else %}
+                <li class="disabled"><span>Anterior</span></li>
+            {% endif %}
+    
+            {% for num in empresas.paginator.page_range %}
+                {% if empresas.number == num %}
+                    <li class="active"><span>{{ num }}</span></li>
+                {% elif num > empresas.number|add:'-2' and num < empresas.number|add:'2' %}
+                    <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+    
+            {% if empresas.has_next %}
+                <li><a href="?page={{ empresas.next_page_number }}" class="pagination-link">Próxima</a></li>
+            {% else %}
+                <li class="disabled"><span>Próxima</span></li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    
+
 </div>
 {% endblock %}
