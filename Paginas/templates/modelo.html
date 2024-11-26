@@ -96,196 +96,88 @@
     {% if user.is_authenticated %}
 
 
+
     <header id="header" class="header fixed-top d-flex align-items-center">
 
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="{% url 'inicio' %}" class="logo d-flex align-items-center">
-                <img src="{% static 'img/icon.png' %}" alt="">
-                <span class="d-none d-lg-block">ElaEmpreende</span>
-            </a>
-            <!-- Add this button/icon in your header or wherever you want to place it -->
+    <!-- Logo -->
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="/inicio/" class="logo d-flex align-items-center">
+            <img src="{% static 'img/icon.png' %}" alt="">
+            <span class="d-none d-lg-block">ElaEmpreende</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
 
-            <i class="bi bi-list toggle-sidebar-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                    fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                </svg></i>
-        </div><!-- End Logo -->
-
-        <div class="search-bar">
-            <form method="GET" action="
-            {% if pagina == 'tarefas' %}
-                {% url 'listar-tarefas' %}
-            {% elif pagina == 'produtos' %}
-                {% url 'listar-produto' %}
-            {% elif pagina == 'clientes' %}
-                {% url 'cliente_list' %}
-            {% elif pagina == 'vendas' %}
-                {% url 'listar-vendas' %}
-            {% elif pagina == 'perfis' %}
-                {% url 'listar_perfis' %}
-            {% elif pagina == 'perfis' %}
-                {% url 'perfil_usuario' username=usuario.username %}
-            {% elif pagina == 'comentarios' %}
-                {% url 'exibir_comentarios' %}
-            {% endif %}" class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-                id="searchForm">
-                <div class="input-group">
-                    <input type="text" name="q" id="searchInput" class="form-control bg-light border-0 small"
-                        placeholder="Procurar..." aria-label="Search" aria-describedby="basic-addon2"
-                        value="{{ request.GET.q }}">
-                    <div class="input-group-append">
-                        <button class="btn" type="button" id="clearSearch" style="display: none;">
-                            x
-                        </button>
-                        <button class="btn btn-primary" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form method="GET" action="/listar-perfis/" class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Procurar..." aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart-fill" viewBox="0 0 16 16">
+                            <path d="M6.5 13a6.47 6.47 0 0 0 3.845-1.258h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1A6.47 6.47 0 0 0 13 6.5 6.5 6.5 0 0 0 6.5 0a6.5 6.5 0 1 0 0 13m0-8.518c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018"/>
+                          </svg></i>
+                    </button>
                 </div>
-            </form>
-        </div>
-        <!-- Ícone de pesquisa para telas pequenas -->
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle" href="#" id="mobileSearchIcon">
-                        <i class="bi bi-search">
-                            <svg xmlns="http://www.w3.org/2000/svg" style="color:#e21e80;" width="16" height="16"
-                                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg>
-                        </i>
-                    </a>
-                </li>
+            </div>
+        </form>
+    </div>
 
+    <!-- Navigation -->
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
 
+            <!-- Search Icon for Small Screens -->
+            <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle" href="#">
+                    <i class="bi bi-search"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <span class="nav-item dropdown pe-3" id="time"></span> &nbsp;
-                </li>
+            <!-- Clock -->
+            <li class="nav-item">
+                <span class="nav-item pe-3" id="time">08:43:09</span>
+            </li>
 
-                <!-- perfil onde esta o erro -->
-                <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0 dropdown-toggle" href="#"
-                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div style="margin: 10%;">
-                            <!-- Verifique se essa lógica de template está funcionando corretamente -->
+            <!-- Profile -->
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/media/images/R.jfif" alt="Foto de Perfil" class="rounded-circle" width="40" height="40" style="object-fit: cover; border-radius: 50%; border: 2px solid #e5378e;">
+                    <span class="d-none d-md-block ps-2">admineeu</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" aria-labelledby="navbarDropdown">
+                    <li class="dropdown-header">
+                        <h6>admineeu</h6>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="/alterar-senha/">
+                            <i class="bi bi-gear"></i>
+                            <span>Alterar senha</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="/perfil/admineeu/">
+                            <i class="bi bi-person-bounding-box"></i>
+                            <span>Editar Perfil</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Sair</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                            {% if user.empresa.imagem %}
-                            <img src="{{ request.user.empresa.imagem.url }}" alt="Foto de Perfil" width="40px"
-                                height="120px" style="object-fit: cover; border-radius: 50%; border: 2px solid #e5378e;"
-                                class="rounded-circle">
-                            {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                <path fill-rule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                            </svg>
-                            {% endif %}
+        </ul>
+    </nav>
 
-                        </div>
-                        <span class="d-none d-md-block ps-2">{{ user.username }}</span>
-                    </a><!-- End Profile Image Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-                        aria-labelledby="navbarDropdown">
-                        <li class="dropdown-header">
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                                href="{% url 'perfil_usuario' username=user.username %}">
-
-
-                                <h6>{{ user.username }}</h6>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                                href="{% url 'perfil_usuario' username=user.username %}">
-
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'alterar_senha' %}"
-                                style="display: inline;">
-                                <i class="bi bi-gear">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path fill-rule="evenodd"
-                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                    </svg>
-                                </i>
-                                {% csrf_token %}
-                                <span>Alterar senha</span>
-                            </a>
-
-
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center"
-                                href="{% url 'perfil_usuario' request.user.username %}" style="display: inline;">
-                                <i>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-person-bounding-box" viewBox="0 0 16 16">
-                                        <path
-                                            d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5" />
-                                        <path
-                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                    </svg>
-                                </i>
-                                {% csrf_token %}
-                                <span>Editar Perfil</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}"
-                                style="display: inline;">
-                                <i class="bi bi-box-arrow-right">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                    </svg>
-                                </i>
-                                {% csrf_token %}
-                                <span>Sair</span>
-                            </a>
-
-
-                            </a>
-                        </li>
-
-
-
-                    </ul><!-- End Profile Dropdown Items -->
-                </li>
-
-            </ul>
-        </nav><!-- End Icons Navigation -->
-        <!-- Formulário de pesquisa oculto para telas pequenas -->
     </header>
+
     <!-- Page Wrapper -->
     <div id="sidebar">
         <!-- Sidebar -->

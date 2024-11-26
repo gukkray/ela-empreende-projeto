@@ -18,6 +18,7 @@ from django.contrib.auth.views import PasswordResetView
 
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'password_reset_subject.txt'
+    
 class UsuarioCreate(CreateView):
     template_name = "usuarios/form.html"
     form_class = UsuarioForms

@@ -480,12 +480,13 @@ pre {
   }
 
 .row {
-
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: nowrap;
-  margin-right: -15px;
-  margin-left: -15px; }
+display: flex;
+-ms-flex-wrap: wrap;
+flex-wrap: wrap;
+margin-right: -15px;
+margin-left: -15px;
+flex-direction: row;
+}
 
 .no-gutters {
   margin-right: 0;

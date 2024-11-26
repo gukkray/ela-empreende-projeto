@@ -13,11 +13,12 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
 
-    .cards-column {
+.cards-column {
         float: left;
         width: 100%;
         height: 100px;
         display: flex;
+        justify-content: space-evenly;
     }
 
     .calendar-column {
@@ -34,6 +35,7 @@
             width: 100%;
         }
     }
+    
     
 </style>
 {% endblock %}
@@ -106,7 +108,7 @@
         </div>
     </div>
 </div>
-
+    <div>
     <div class="calendar-column">
         <section class="ftco-section">
             <div class="container">
@@ -172,7 +174,7 @@
             </div>
         </section>
     </div>
-</div>
+</div></div>
 {% endblock %}
 
 {% block scripts %}
