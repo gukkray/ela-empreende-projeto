@@ -15,6 +15,8 @@ from gerenciar.models import Produto
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.views import PasswordResetView
+from django.core.paginator import Paginator
+
 
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'password_reset_subject.txt'
@@ -272,7 +274,6 @@ def excluir_contato(request, contato_id):
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 @login_required
 def listar_perfis(request):
     query = request.GET.get('q')
@@ -283,8 +284,17 @@ def listar_perfis(request):
             Q(user__username__icontains=query) |  # Filtra pelo nome de usuário
             Q(descricao__icontains=query)  # Filtra pela descrição da empresa
         )
+    
+    # Paginação: define quantos itens por página (ajustado para 9)
+    paginator = Paginator(empresas, 9)  # 9 itens por página
+    page_number = request.GET.get('page')  # Pega o número da página atual
+    page_obj = paginator.get_page(page_number)  # Obtém os objetos da página solicitada
 
-    return render(request, 'usuarios/perfiluser.html', {'empresas': empresas, 'pagina': 'perfis'})
+    return render(request, 'usuarios/perfiluser.html', {
+        'empresas': page_obj,  # Passa a página de empresas para o template
+        'pagina': 'perfis'
+    })
+
 
 from .forms import LinksForm
 from .models import Links
