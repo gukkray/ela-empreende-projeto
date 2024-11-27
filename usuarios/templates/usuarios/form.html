@@ -10,46 +10,16 @@
   <link href="{% static 'css/rosa.css' %}" rel="stylesheet">
 
   <style>
-  /* Estilos gerais de fundo */
-body, html {
-    background: linear-gradient(to right, #571cc3 0%, #e21e80 100%);
-    height: 100vh;
-    background-color: linear-gradient(to right, #571cc3 0%, #e21e80 100%);
-    margin: 0;
-    padding: 0;
-}
-
-/* Garante que o fundo colorido da página cubra toda a altura da tela */
-.corLog {
-    height: 100%;
-}
-
-/* Ajusta o card para que ele não fique grudado na parte superior */
-.card {
-      max-height: 90vh;
-      overflow-y: auto;
-      margin-top: 30px; /* Adiciona a margem superior */
-      margin-bottom: 30px; /* Adiciona a margem inferior */
-  }
-/* Ajuste para o container para remover o padding extra */
-.container {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* Estilo do botão para destacar */
-button {
-    margin-top: 20px; /* Adiciona um pequeno espaçamento acima do botão */
-}
+  
 
   </style>
 </head>
 {% block corpo %}
-<section class="vh-100 corLog" style="background-color: #571cc3">
+<section class="vh-100 corLog" style="margin: 2%;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
-        <div class="card" style="border-radius: 1rem; max-height: 100vh; overflow-y: auto;">
+        <div class="card" >
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"

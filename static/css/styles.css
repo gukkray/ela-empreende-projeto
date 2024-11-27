@@ -2391,7 +2391,7 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-image: linear-gradient(135deg, #571cc3  10%, #e21e80 100%);
+  /* background-image: linear-gradient(135deg, #571cc3  10%, #e21e80 100%); */
   border-color: #e44f9c;
 }
 
@@ -7680,7 +7680,7 @@ button.bg-dark:focus {
 }
 
 .corLog{
-  background: linear-gradient(to right, #571cc3 0%, #e21e80 100%);
+  background: #ffff;
 }
 
 .vh-100 {
@@ -9709,7 +9709,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .text-muted {
-  color: #858796 !important;
+  color: #b2b3b3 !important;
 }
 
 .text-black-50 {
