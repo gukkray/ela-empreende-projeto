@@ -65,15 +65,19 @@
 
     /* Media Query para telas menores que 480px */
     @media screen and (max-width: 521px) {
+        #main {
+            padding: 0px !important;
+            padding-top: 50px !important;}
+
         .cards-column {
-        flex-direction: column;
-        gap: 10px;
-        width: 20px;
-        height: 120px;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 20px !important;
+        height: 120px !important;
     }
 
         .card {
-            flex: 1 1 100%; /* Cada card ocupa 100% do espaço disponível */
+            flex: 1 1 90% !important; /* Cada card ocupa 100% do espaço disponível */
             min-width: 100%; /* Cards ocupam toda a largura */
         }
 
@@ -93,7 +97,9 @@
     }
 </style>
 {% endblock %}
-
+<!--caminho do calendario: C:\Users\maria\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schedule\models\calendars.py
+caminho de evento: C:\Users\maria\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\schedule\models\events.py
+-->
 {% block corpo %}
 <div class="container">
     <div class="cards-column">
