@@ -8592,8 +8592,9 @@ h1, h2, h3, h4, h5,
 
 /* Aplicação do gradiente no hover */
 .pagination-link {
-  color: #e5378e;
-  background-color: #fff;
+  background: linear-gradient(135deg, #571cc3 10%, #e5378e 100%);
+  color: #fff;
+  transform: translateY(-2px); /* Efeito de "hover" com elevação */
 }
 
 .pagination-link:hover {

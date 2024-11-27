@@ -38,7 +38,8 @@
                     {% endif %}
                     <h5 class="card-title">{{ empresa.user.username }}</h5>
                     <p class="card-text">{{ empresa.descricao }}</p>
-                    <a href="{% url 'perfil_usuario' empresa.user.username %}" class="btn btn-primary mt-auto">Ver Perfil</a>
+                    <a href="{% url 'perfil_usuario' empresa.user.username %}" class="pagination-link mt-auto">Ver Perfil</a>
+
                 </div>
             </div>
         </div>
