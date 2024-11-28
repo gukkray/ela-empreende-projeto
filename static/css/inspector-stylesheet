@@ -13,6 +13,7 @@ button {
     border-color: #571cc3;  /* Cor da borda inicial */
     transition: box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;  /* Transição suave */
     text-shadow: none !important;
+    color: #fff;
 }
 
 button:hover {

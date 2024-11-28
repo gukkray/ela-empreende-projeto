@@ -47,6 +47,22 @@
         }
     }
 
+    @media screen and (max-width: 521px) {
+    .container {
+    display: flex
+;
+    flex-direction: column;}
+
+    .cards-column {
+        flex-direction: column !important;
+        margin-top: 20px;
+        gap: 10px !important;
+        /* width: 20px !important; */
+        /* height: 120px !important; */
+    }
+
+}
+
     .card {
         flex: 1 1 calc(33.333% - 20px); /* Cards ocupam 33.333% do espaço em telas grandes */
         min-width: 250px; /* Definir uma largura mínima */

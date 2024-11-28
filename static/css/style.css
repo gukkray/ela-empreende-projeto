@@ -461,7 +461,7 @@ pre {
   @media (min-width: 992px) {
     .container {
       max-width: 960px; } }
-  @media (min-width: 1200px) {
+  @media (min-width: 2000px) {
     .container {
       max-width: 1140px; } }
 
@@ -8553,8 +8553,8 @@ h1, h2, h3, h4, h5,
 .nav-link-bordered.active {
     border-bottom: 2px solid #e21e80;
 }
-/* Estilo para a paginação */
-/* Estilo para a paginação */
+/* Estilo para a paginaÃ§Ã£o */
+/* Estilo para a paginaÃ§Ã£o */
 .pagination {
   display: flex;
   justify-content: center;
@@ -8564,11 +8564,11 @@ h1, h2, h3, h4, h5,
 
 .pagination-list {
   display: flex;
-  flex-wrap: wrap; /* Faz a paginação se ajustar em telas menores */
+  flex-wrap: wrap; /* Faz a paginaÃ§Ã£o se ajustar em telas menores */
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 8px; /* Adiciona espaço entre os botões */
+  gap: 8px; /* Adiciona espaÃ§o entre os botÃµes */
 }
 
 .pagination-list li {
@@ -8591,20 +8591,20 @@ h1, h2, h3, h4, h5,
   max-width: fit-content;
 }
 
-/* Aplicação do gradiente no hover */
+/* AplicaÃ§Ã£o do gradiente no hover */
 .pagination-link {
   background: linear-gradient(135deg, #571cc3 10%, #e5378e 100%);
   color: #fff;
-  transform: translateY(-2px); /* Efeito de "hover" com elevação */
+  transform: translateY(-2px); /* Efeito de "hover" com elevaÃ§Ã£o */
 }
 
 .pagination-link:hover {
   background: linear-gradient(135deg, #571cc3 10%, #e5378e 100%);
   color: #fff;
-  transform: translateY(-2px); /* Efeito de "hover" com elevação */
+  transform: translateY(-2px); /* Efeito de "hover" com elevaÃ§Ã£o */
 }
 
-/* Gradiente para o botão ativo */
+/* Gradiente para o botÃ£o ativo */
 .active span {
   background: linear-gradient(135deg, #571cc3 10%, #e5378e 100%);
   color: #fff;
@@ -8612,7 +8612,7 @@ h1, h2, h3, h4, h5,
   border: none;
 }
 
-/* Botão desabilitado */
+/* BotÃ£o desabilitado */
 .disabled span {
   color: #ccc;
   border: 1px solid #ddd;
@@ -8620,7 +8620,7 @@ h1, h2, h3, h4, h5,
   cursor: not-allowed;
 }
 
-/* Estilo para os "..." na paginação */
+/* Estilo para os "..." na paginaÃ§Ã£o */
 .dots span {
   color: #e5378e;
   font-size: 16px;

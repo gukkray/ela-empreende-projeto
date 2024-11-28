@@ -26,16 +26,47 @@
     <link rel="stylesheet" href="{% static 'css/calendario/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
-        .nav-profile {
-    display: flex;
-    justify-content: flex-end !important; /* Alinha todo o conteúdo à direita */
-    align-items: center;
-}
+      /* Alinha o conteúdo da nav-profile à esquerda */
+    .nav-profile {
+        display: flex;
+        justify-content: flex-start !important;  /* Garante que o conteúdo esteja à esquerda */
+        align-items: center;  /* Mantém os itens alinhados verticalmente */
+    }
 
-.nav-profile span {
-    margin-right: 10px !important; /* Espaço entre o nome e a foto */
-    text-align: right;
-}
+    /* Remover qualquer margem direita extra */
+    .nav-profile span {
+        margin-right: 0 !important;  /* Sem margem à direita */
+    }
+
+    /* Tenta garantir que a estrutura da barra de navegação não tenha interferência */
+    .header-nav {
+        display: flex;
+        justify-content: flex-start; /* Alinha todos os itens da navegação à esquerda */
+    }
+
+    /* Garantir que o container não tenha espaços extras à direita */
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+
+/* Responsivo para telas menores */
+@media (max-width: 1480px) {
+    .nav-profile {
+        justify-content: flex-end;
+    }
+
+    /* Ajusta o nome do usuário e foto para caberem bem em telas menores */
+    .nav-profile span {
+        font-size: 14px; /* Ajusta o tamanho da fonte para telas menores */
+    }
+
+    .nav-profile img {
+        width: 35px;
+        height: 35px;
+    }}
 
         /* Adicione este CSS ao seu arquivo de estilos */
         @media (max-width: 769px) {
@@ -69,6 +100,7 @@
             animation: pulse 1.5s infinite;
             /* Altere a duração (1.5s) conforme necessário */
         }
+    
 
         @media (max-width: 1198px) {
 
@@ -152,15 +184,15 @@
 
             <!-- Clock -->
             <li class="nav-item">
-                <span class="nav-item pe-3" id="time">08:43:09</span>
+                <span class="nav-item pe-3" id="time"></span>
             </li>
 
             <!-- Profile -->
-            <li class="nav-item dropdown" style="margin-left: 290%;">
+            <li class="nav-item dropdown" >
                 <a class="nav-link nav-profile d-flex align-items-center pe-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- Nome primeiro -->
-                    <span class="d-none d-md-block ps-2 me-2" style="text-align: right;">{{ user.username }}</span>  
-                    <!-- Foto à direita -->
+                    <span class="d-none d-md-block ps-2 me-2" style="text-align: left;">{{ user.username }}</span>  
+                    <!-- Foto à esquerda -->
                     {% if user.empresa.imagem %}
                         <img src="{{ user.empresa.imagem.url }}" width="40" height="40" alt="Profile" class="rounded-circle">
                     {% else %}
@@ -170,6 +202,7 @@
                         </svg>
                     {% endif %}
                 </a>
+                
                 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" aria-labelledby="navbarDropdown">
                     <li class="dropdown-header">
