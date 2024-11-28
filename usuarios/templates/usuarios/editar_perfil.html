@@ -1,5 +1,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
+
 <head>
     {% block titulo %}
     <title>Editar Perfil</title>
@@ -8,39 +9,53 @@
     <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     <link href="{% static 'css/rosa.css' %}" rel="stylesheet">
+    <link href="{% static 'css/inspector-stylesheet' %}" rel="stylesheet">
+
 </head>
+
 {% block corpo %}
-<section class="vh-100 corLog" style="background-color: #571cc3">
+<section class="vh-100 corLog">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
-        <div class="card" style="border-radius: 1rem;">
+        <div class="card" style="border-radius: 1rem; background: linear-gradient(135deg, #571cc3 10%, #e21e80 100%);">
           <div class="row g-0">
+            <!-- Coluna da imagem -->
             <div class="col-md-6 col-lg-5 d-none d-md-block">
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                alt="login form" class="img-fluid w-100 h-100" style="border-radius: 1rem 0 0 1rem;" />
+                alt="Editar Perfil" class="img-fluid w-100 h-100"
+                style="border-radius: 0.95rem 0 0 0.95rem; object-fit: cover; height: 100%;" />
             </div>
-              <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                <div class="card-body p-4 p-lg-5 text-black">
-                  <div class="d-flex align-items-center mb-3 pb-1">
-                      <span class="h1 text-gradient fw-bold mb-0">ElaEmpreende</span>
-                    </div>
-                  <form action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Atualize seu perfil</h5>
-                    {{ form|crispy }}
-                    
-                    
-                    <div class="pt-1 mb-4">
-                        <button type="submit" class="btn btn-dark btn-primary btn-lg btn-block">Atualizar</button>
-                    </div>
-                  </form>
+
+            <!-- Formulário -->
+            <div class="col-md-6 col-lg-7 d-flex align-items-center" style="color: aliceblue;">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <a href="{% url 'inicio' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left" style="color: #fff;" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                  </svg>
+                </a>
+                <br><br>
+
+                <div class="d-flex align-items-center mb-3 pb-1">
+                  <span class="h1 text-gradient fw-bold mb-0">ElaEmpreende</span>
                 </div>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Atualize seu perfil</h5>
+                  {{ form|crispy }}
+
+                  <div class="form-group">
+                    <button type="submit"class="btn btn-dark btn-primary btn-lg btn-block" >Atualizar</button>
+                  </div>
+                </form>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </div> <!-- Fim Row -->
+        </div> <!-- Fim Card -->
+      </div> <!-- Fim Col -->
+    </div> <!-- Fim Row -->
+  </div> <!-- Fim Container -->
 </section>
 {% endblock %}
