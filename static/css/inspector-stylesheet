@@ -1,0 +1,31 @@
+button:hover {
+     /* Cor de fundo ao passar o mouse */
+      /* Cor da borda ao passar o mouse */
+      /* Mantém o cursor de ponteiro */
+      /* Transição suave para a mudança de cor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;  /* Sombra com transparência */
+    opacity: 0.9;  /* Leve transparência */
+    cursor: pointer;  /* Cursor de ponteiro */
+}
+
+button {
+    background-color: #571cc3;  /* Cor de fundo inicial */
+    border-color: #571cc3;  /* Cor da borda inicial */
+    transition: box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;  /* Transição suave */
+    text-shadow: none !important;
+}
+
+button:hover {
+      /* Sombra com transparência */
+      /* Leve transparência */
+        /* Cursor de ponteiro */
+        /* Sombra com transparência */
+        /* Leve transparência */
+        /* Cursor de ponteiro */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;  /* Sombra com transparência */
+      opacity: 0.9 !important;  /* Leve transparência */
+      cursor: pointer !important;  /* Cursor de ponteiro */
+      background-color: #571cc3 !important;  /* Mantém a cor de fundo roxa ao passar o mouse */
+      border-color: #571cc3 !important;
+      text-shadow: none !important;
+}

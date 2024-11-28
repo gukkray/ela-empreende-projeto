@@ -8,7 +8,7 @@
   <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/styles.css' %}" rel="stylesheet">
   <link href="{% static 'css/rosa.css' %}" rel="stylesheet">
-
+  <link href="{% static 'css/inspector-stylesheet' %}" rel="stylesheet">
   <style>
   
 
@@ -19,23 +19,23 @@
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
-        <div class="card" >
+        <div class="card" style="background: linear-gradient(135deg, #571cc3  10%, #e21e80 100%); margin: 2%;">
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
               alt="login form" 
               class="img-fluid d-block" 
-              style="border-radius: 1rem 0 0 1rem; object-fit: cover; height: 100%;" />
+              style="border-radius: 0.95rem 0 0 0.95rem; object-fit: cover;height: 100%;" />
             </div>
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
                 <a href="{% url 'index' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" style="color: #fff;" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
                   </svg>
                 </a>
                 <br><br>
-
+                <div style="color: #fff;">
                 <div class="d-flex align-items-center mb-3 pb-1">
                     <span class="h1 text-gradient fw-bold mb-0">ElaEmpreende</span>
                 </div>
@@ -51,8 +51,9 @@
 
                   <button type="submit" class="btn btn-dark btn-primary btn-lg btn-block">Cadastrar</button>
                 </form>
-                <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                  <a style="color: #393f81;" href="{% url 'login' %}">Já tem uma conta? Faça login.</a>
+              </div>
+                <p class="mb-5 pb-lg-2" style="    color: #cdcdcd;">
+                  <a style="    color: #cdcdcd;" href="{% url 'login' %}">Já tem uma conta? Faça login.</a>
                 </p>
               </div>
             </div>
