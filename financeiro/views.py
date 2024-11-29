@@ -16,11 +16,17 @@ class SaidaCreate(LoginRequiredMixin, CreateView):
     template_name = "cadastrar_movimentacao.html"
     form_class = MovimentacaoForm
     success_url = reverse_lazy('listar-saida')  
+
     def form_valid(self, form):
         form.instance.usuario_id = self.request.user.id
         form.instance.valor *= -1  
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tipo_movimentacao'] = "Saída"
+        return context
+    
 class SaidaDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     model = Movimentacao
@@ -49,6 +55,10 @@ class EntradaCreate(LoginRequiredMixin, CreateView):
         form.instance.usuario_id = self.request.user.id
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tipo_movimentacao'] = "Entrada"
+        return context
 
 class EntradaDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
