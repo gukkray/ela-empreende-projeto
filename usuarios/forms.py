@@ -7,6 +7,8 @@ from localflavor.br.forms import BRStateSelect
 from .models import Empresa, Endereco, Contato, Links
 from localflavor.br.forms import BRStateSelect
 from localflavor.br.br_states import STATE_CHOICES
+import re
+
 
 
 class UsuarioForms(UserCreationForm):
@@ -90,12 +92,11 @@ class ContatoForm(forms.ModelForm):
 
     def validate_phone_number(self, phone_number):
         if phone_number:
-            phone_number_digits = re.sub(r'\D', '', phone_number)
-            if len(phone_number_digits) != 10:
-                raise ValidationError("O contato deve conter exatamente 10 números.")
+            phone_number_digits = re.sub(r'\D', '', phone_number)  # Remove caracteres não numéricos
+            if len(phone_number_digits) < 9:  # Alterado para aceitar pelo menos 9 dígitos
+                raise ValidationError("O contato deve conter no mínimo 9 números.")
             return phone_number_digits
         return phone_number
-
 
 class ExcluirContatoForm(forms.Form):
     contato = forms.BooleanField(required=False)

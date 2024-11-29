@@ -286,7 +286,7 @@ def listar_perfis(request):
         )
     
     # Paginação: define quantos itens por página (ajustado para 9)
-    paginator = Paginator(empresas, 9)  # 9 itens por página
+    paginator = Paginator(empresas, 6)  # 9 itens por página
     page_number = request.GET.get('page')  # Pega o número da página atual
     page_obj = paginator.get_page(page_number)  # Obtém os objetos da página solicitada
 
