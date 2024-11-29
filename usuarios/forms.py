@@ -7,6 +7,8 @@ from localflavor.br.forms import BRStateSelect
 from .models import Empresa, Endereco, Contato, Links
 from localflavor.br.forms import BRStateSelect
 from localflavor.br.br_states import STATE_CHOICES
+import re
+
 
 
 class UsuarioForms(UserCreationForm):
@@ -43,22 +45,24 @@ class UsuarioForms(UserCreationForm):
             raise ValidationError(_("As senhas não correspondem."))
         return password2
 
-
 class EditProfileForm(forms.ModelForm):
+    email = forms.EmailField(label="E-mail", required=True)  # Add this field
     descricao = forms.CharField(max_length=255, label="Descrição", required=False)
     imagem = forms.ImageField(label="Imagem", required=False, widget=forms.FileInput)
     remover_imagem = forms.BooleanField(label="Remover imagem", required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'descricao', 'imagem']
+        fields = ['username', 'email', 'descricao', 'imagem']  # Include email here
 
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})  # Add class for styling
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
         self.fields['imagem'].widget.attrs.update({'class': 'form-control'})
         self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['remover_imagem'].widget.attrs.update({'class': 'form-check-input'})
+
 
 
 class EnderecoForm(forms.ModelForm):
@@ -88,12 +92,11 @@ class ContatoForm(forms.ModelForm):
 
     def validate_phone_number(self, phone_number):
         if phone_number:
-            phone_number_digits = re.sub(r'\D', '', phone_number)
-            if len(phone_number_digits) != 10:
-                raise ValidationError("O contato deve conter exatamente 10 números.")
+            phone_number_digits = re.sub(r'\D', '', phone_number)  # Remove caracteres não numéricos
+            if len(phone_number_digits) < 9:  # Alterado para aceitar pelo menos 9 dígitos
+                raise ValidationError("O contato deve conter no mínimo 9 números.")
             return phone_number_digits
         return phone_number
-
 
 class ExcluirContatoForm(forms.Form):
     contato = forms.BooleanField(required=False)
