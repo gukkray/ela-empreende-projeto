@@ -43,22 +43,24 @@ class UsuarioForms(UserCreationForm):
             raise ValidationError(_("As senhas não correspondem."))
         return password2
 
-
 class EditProfileForm(forms.ModelForm):
+    email = forms.EmailField(label="E-mail", required=True)  # Add this field
     descricao = forms.CharField(max_length=255, label="Descrição", required=False)
     imagem = forms.ImageField(label="Imagem", required=False, widget=forms.FileInput)
     remover_imagem = forms.BooleanField(label="Remover imagem", required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'descricao', 'imagem']
+        fields = ['username', 'email', 'descricao', 'imagem']  # Include email here
 
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})  # Add class for styling
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
         self.fields['imagem'].widget.attrs.update({'class': 'form-control'})
         self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['remover_imagem'].widget.attrs.update({'class': 'form-check-input'})
+
 
 
 class EnderecoForm(forms.ModelForm):
