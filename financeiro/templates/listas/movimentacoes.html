@@ -46,10 +46,9 @@
     }
   </style>
 <div class="container">
-
 <hr>
 <hr>
-    <h4><i class="bi bi-people"></i> Cadastrar entrada</h4>
+    <h4><i class="bi bi-people"></i>  Movimetações Cadastradas</h4>
 
     <div class="table-responsive">
         <table class="table">
@@ -58,24 +57,27 @@
                     <th>Descrição</th>
                     <th>Valor</th>
                     <th>Data</th>
+                    <th>Tipo de Movimentação</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                {% for Movimentacao in object_list %}
-                <tr>
-                    <td>{{ Movimentacao.descricao }}</td>
-                    <td>{{ Movimentacao.valor }}</td>
-                    <td>{{ Movimentacao.data }}</td>
-                    <td>
-                        <a href="{% url 'excluir-saida' Movimentacao.pk %}"  class="btn btn-danger btn-sm" title="Excluir"> Excluir </a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center">Sem movimentações cadastradas.</td>
-                </tr>
-                {% endfor %}
+              {% for movimentacao in object_list %}
+              <tr>
+                  <td>{{ movimentacao.descricao }}</td>
+                  <td>{{ movimentacao.valor }}</td>
+                  <td>{{ movimentacao.data }}</td>
+                  <td>{{ movimentacao.get_tipo_display }}</td> <!-- Exibe o tipo -->
+                  <td>
+                      <a href="{% url 'excluir-movimentacao' pk=movimentacao.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+                  </td>
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="5" class="text-center">Sem movimentações cadastradas.</td>
+              </tr>
+              {% endfor %}
+                
             </tbody>
         </table>
     </div>

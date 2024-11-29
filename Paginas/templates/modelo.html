@@ -539,9 +539,9 @@
                 </a>
                 
                 <ul id="forms-movimentacoes" class="nav-content collapse navbar-nav" data-bs-parent="#sidebar-nav">
-                    <!-- Botão de Cadastrar Entrada -->
+                    <!-- Botão de Cadastrar movimentação -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cadastrar-entrada' %}">
+                        <a class="nav-link" href="{% url 'cadastrar-movimentacao' %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-plus-circle" viewBox="0 0 16 16">
                                 <path
@@ -549,22 +549,10 @@
                                 <path
                                     d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2z" />
                             </svg>
-                            <span>Cadastrar Entrada</span>
+                            <span>Cadastrar Movimentação</span>
                         </a>
                     </li>
-                    <!-- Botão de Cadastrar Saída -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cadastrar-saida' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 4a.5.5 0 0 1 .5.5V7H5a.5.5 0 0 1 0-1h3.5V4.5A.5.5 0 0 1 8 4z" />
-                                <path
-                                    d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2z" />
-                            </svg>
-                            <span>Cadastrar Saída</span>
-                        </a>
-                    </li>
+                
                     <!-- Botão de Gráfico -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'grafico' %}">
@@ -578,7 +566,7 @@
                     </li>
                     <!-- Botão de Listar Movimentações -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'listar-entrada' %}">
+                        <a class="nav-link" href="{% url 'listar-movimentacoes' %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-list-check" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"

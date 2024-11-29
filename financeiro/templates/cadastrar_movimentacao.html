@@ -98,7 +98,7 @@
         <hr>
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <h4>Cadastrar {{ tipo_movimentacao }}</h4>
+            <h4>Cadastrar Movimentação</h4>
 
             {{ form|crispy }}
             <button type="submit" class="btn btn-primary btn-sm">Cadastrar</button>

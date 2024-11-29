@@ -10,72 +10,35 @@ from django.http import JsonResponse
 from .models import Movimentacao
 from django.db.models import Sum
 
-class SaidaCreate(LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login') 
+class MovimentacaoCreate(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
     model = Movimentacao
     template_name = "cadastrar_movimentacao.html"
     form_class = MovimentacaoForm
-    success_url = reverse_lazy('listar-saida')  
+    success_url = reverse_lazy('listar-movimentacoes')  # Lista todas as movimentações.
 
     def form_valid(self, form):
         form.instance.usuario_id = self.request.user.id
-        form.instance.valor *= -1  
+        if form.cleaned_data['tipo'] == 'saida':
+            form.instance.valor *= -1  # Ajusta o valor para saídas.
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tipo_movimentacao'] = "Saída"
-        return context
+class MovimentacaoList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+    model = Movimentacao
+    template_name = "listas/movimentacoes.html"
+    context_object_name = 'movimentacoes'
+    ordering = ['-id']
+
+    def get_queryset(self):
+        return Movimentacao.objects.filter(usuario=self.request.user)
     
-class SaidaDelete(LoginRequiredMixin, DeleteView):
+class MovimentacaoDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     model = Movimentacao
     template_name = "excluir_movimentacao.html"
-    success_url = reverse_lazy('listar-saida')  
-    fields = '__all__'  
+    success_url = reverse_lazy('listar-movimentacoes')
 
-class SaidaList(LoginRequiredMixin, ListView):
-    login_url = reverse_lazy('login')  
-    model = Movimentacao
-    template_name = "listas/saidas.html"
-    context_object_name = 'saidas'  
-    ordering = ['-id'] 
-
-    def get_queryset(self):
-        return Movimentacao.objects.filter(usuario=self.request.user)
-
-class EntradaCreate(LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login') 
-    model = Movimentacao
-    template_name = "cadastrar_movimentacao.html"
-    form_class = MovimentacaoForm
-    success_url = reverse_lazy('listar-entrada')  
-
-    def form_valid(self, form):
-        form.instance.usuario_id = self.request.user.id
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tipo_movimentacao'] = "Entrada"
-        return context
-
-class EntradaDelete(LoginRequiredMixin, DeleteView):
-    login_url = reverse_lazy('login')
-    model = Movimentacao
-    template_name = "excluir_movimentacao.html"
-    success_url = reverse_lazy('listar-entrada')  
-    fields = '__all__'  
-
-class EntradaList(LoginRequiredMixin, ListView):
-    login_url = reverse_lazy('login')  
-    model = Movimentacao
-    template_name = "listas/entradas.html"
-    context_object_name = 'entradas'  
-    ordering = ['-id'] 
-
-    def get_queryset(self):
-        return Movimentacao.objects.filter(usuario=self.request.user)
 
 @login_required
 def exibir_grafico(request):
