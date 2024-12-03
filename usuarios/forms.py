@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from localflavor.br.forms import BRStateSelect
-from .models import Empresa, Endereco, Contato, Links
-from localflavor.br.forms import BRStateSelect
 from localflavor.br.br_states import STATE_CHOICES
+from .models import Empresa, Endereco, Contato, Links
 import re
+
 
 class UsuarioForms(UserCreationForm):
     nome = forms.CharField(max_length=100, label="Nome")
@@ -43,28 +43,26 @@ class UsuarioForms(UserCreationForm):
             raise ValidationError(_("As senhas não correspondem."))
         return password2
 
+
 class EditProfileForm(forms.ModelForm):
-    email = forms.EmailField(label="E-mail", required=True)  # Add this field
+    email = forms.EmailField(label="E-mail", required=True)
     descricao = forms.CharField(max_length=255, label="Descrição", required=False)
     imagem = forms.ImageField(label="Imagem", required=False, widget=forms.FileInput)
     remover_imagem = forms.BooleanField(label="Remover imagem", required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'descricao', 'imagem']  # Include email here
+        fields = ['username', 'email', 'descricao', 'imagem']
 
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update({'class': 'form-control'})  # Add class for styling
-        self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
-        self.fields['imagem'].widget.attrs.update({'class': 'form-control'})
-        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
         self.fields['remover_imagem'].widget.attrs.update({'class': 'form-check-input'})
 
 
-
 class EnderecoForm(forms.ModelForm):
-    estado = forms.ChoiceField(choices=STATE_CHOICES, label="Estado")  # Define choices here
+    estado = forms.ChoiceField(choices=STATE_CHOICES, label="Estado")
 
     class Meta:
         model = Endereco
@@ -89,11 +87,10 @@ class ContatoForm(forms.ModelForm):
         return self.validate_phone_number(contato2)
 
     def validate_phone_number(self, phone_number):
-        phone_number_digits = re.sub(r'\D', '', phone_number)  # Remove caracteres não numéricos
-            if len(phone_number_digits) < 9:  # Alterado para aceitar pelo menos 9 dígitos
-                raise ValidationError("O contato deve conter no mínimo 9 números.")
-            return phone_number_digits
-        return phone_number
+        phone_number_digits = re.sub(r'\D', '', phone_number)
+        if len(phone_number_digits) < 9:  # Corrigido para 9 dígitos
+            raise ValidationError(_("O contato deve conter no mínimo 9 números."))
+        return phone_number_digits
 
 
 class ExcluirContatoForm(forms.Form):
@@ -105,9 +102,9 @@ class ExcluirContatoForm(forms.Form):
         super(ExcluirContatoForm, self).__init__(*args, **kwargs)
 
         if usuario:
-            if not usuario.contato.contato:
+            if not getattr(usuario.contato, 'contato', None):
                 del self.fields['contato']
-            if not usuario.contato.contato2:
+            if not getattr(usuario.contato, 'contato2', None):
                 del self.fields['contato2']
 
 
@@ -116,9 +113,9 @@ class LinksForm(forms.ModelForm):
         model = Links
         fields = ['linksfacebook', 'linksinstagram', 'linkswhatsapp']
         labels = {
-            'linksfacebook': 'Adicione o link do facebook',
-            'linksinstagram': 'Adicione o link do instagram',
-            'linkswhatsapp': 'Adicione o link do whatsapp',
+            'linksfacebook': 'Adicione o link do Facebook:',
+            'linksinstagram': 'Adicione o link do Instagram:',
+            'linkswhatsapp': 'Adicione o link do WhatsApp:',
         }
 
 
@@ -132,9 +129,9 @@ class ExcluirLinksForm(forms.Form):
         super(ExcluirLinksForm, self).__init__(*args, **kwargs)
 
         if usuario:
-            if not usuario.links.linksfacebook:
+            if not getattr(usuario.links, 'linksfacebook', None):
                 del self.fields['linksfacebook']
-            if not usuario.links.linksinstagram:
+            if not getattr(usuario.links, 'linksinstagram', None):
                 del self.fields['linksinstagram']
-            if not usuario.links.linkswhatsapp:
+            if not getattr(usuario.links, 'linkswhatsapp', None):
                 del self.fields['linkswhatsapp']
