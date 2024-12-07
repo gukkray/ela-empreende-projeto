@@ -153,7 +153,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 class EnderecoUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Endereco
-    template_name = "usuarios/cadastrar_endereco.html"
+    template_name = "usuarios/cadastrar_endereco_edit.html"
     form_class = EnderecoForm
     success_url = reverse_lazy('perfil_usuario')
     def get_success_url(self):
@@ -212,7 +212,7 @@ def cadastrar_contato(request):
 class ContatoUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Contato
-    template_name = "usuarios/cadastrar_contato.html"  # Nome do template de edição
+    template_name = "usuarios/cadastrar_contato_edit.html"  # Nome do template de edição
     form_class = ContatoForm
 
     def get_success_url(self):
@@ -318,7 +318,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 class LinksUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Links
-    template_name = "usuarios/cadastrar_links.html"  # Nome do template de edição
+    template_name = "usuarios/cadastrar_links_edit.html"  # Nome do template de edição
     form_class = LinksForm
 
     def get_success_url(self):

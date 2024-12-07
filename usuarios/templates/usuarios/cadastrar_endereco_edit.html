@@ -1,0 +1,115 @@
+{% extends 'modelo.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<link href="{% static 'img/icon.png' %}" rel="icon">
+
+{% block titulo %}
+<title>
+    Editar Endereço
+</title>
+{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'css/abrir_caixa.css' %}">
+<link rel="stylesheet" href="{% static 'css/cssdavenda.css' %}">
+
+<style>
+    /* Estilo da área de fundo e alinhamento */
+    .corpo {
+        min-height: 100vh; /* Ocupa toda a altura da página */
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+        padding-top: 1rem;
+        padding-left: 1rem; /* Ajuste do espaço à esquerda */
+       
+    }
+
+    /* Estilos principais para o formulário */
+    .formulario-container {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        width: 70%; /* Aumenta a largura do formulário */
+        max-width: 1000px; /* Limita a largura máxima */
+        background-color: #fff; /* Fundo branco para o formulário */
+    }
+
+    /* Estilos para o título */
+    .formulario-container h2 {
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #5a4b4b;
+    }
+
+    /* Estilos para o formulário */
+    .formulario-coluna {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Estilos para os rótulos */
+    .formulario-coluna label {
+        font-weight: bold;
+        color: #5a4b4b;
+        margin-bottom: 5px;
+    }
+
+    /* Estilos para os campos de entrada */
+    .formulario-coluna input[type="text"],
+    .formulario-coluna input[type="number"],
+    .formulario-coluna select {
+        padding: 10px;
+        font-size: 14px;
+        color: #5a4b4b;
+        background-color: #fdf7f7;
+        border: 1px solid #d1bcbc;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Estilo para os botões */
+    .formulario-container .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: #8b5d5d; /* Cor de botão mais escura */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .formulario-container .btn:hover {
+        background-color: #7a5151;
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 768px) {
+        .formulario-container {
+            width: 90%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block corpo %}
+<div class="corpo">
+    <div class="container formulario-container">
+        <h2>Editar Endereço</h2>
+        <div class="formulario-coluna">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <button type="submit" class="btn btn-primary">Editar Endereço</button>
+                <a href="{% url 'perfil_usuario' request.user.username %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

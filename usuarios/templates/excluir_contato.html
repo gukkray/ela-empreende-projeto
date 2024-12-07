@@ -5,21 +5,60 @@
 <title>Excluir Contato</title>
 {% endblock %}
 
-{% block corpo %}
-<div class="container">
-    
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'css/abrir_caixa.css' %}">
+<link rel="stylesheet" href="{% static 'css/cssdavenda.css' %}">
+<style>
+    /* Estilos para a tabela com tema rosa #e21e80 */
+    .table {
+      border: 1px solid #e21e80; /* Rosa escuro */
+      border-collapse: collapse;
+      background-color: #ffe6f2; /* Rosa claro para o fundo da tabela */
+      width: 100%;
+      margin-bottom: 20px;
+    }
 
-    <h4>Excluir Contato</h4>
-    <p>Confirme para excluir o contato:</p>
+    .table th, .table td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #f3a3c6; /* Bordas em rosa mais suave */
+    }
 
+    .table th {
+      background-color: #e21e80; /* Rosa forte para o cabeçalho */
+      color: #fff; /* Texto branco para contraste */
+    }
 
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn  btn-danger">Excluir</button>
-        <a href="{% url 'perfil_usuario' request.user.username %}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+    .table tr:nth-child(even) {
+      background-color: #f9c6da; /* Tom de rosa claro para linhas pares */
+    }
+
+    .table tr:hover {
+      background-color: #f3a3c6; /* Tom médio de rosa no hover */
+    }
+
+    .btn {
+      margin: 5px;
+    }
+
+    #success-message {
+      margin-top: 10px;
+    }
+</style>
 {% endblock %}
 
-
+{% block corpo %}
+<div class="corpo">
+    <div class="container formulario-container">
+        <h4>Excluir Contato</h4>
+        <p>Tem certeza de que deseja excluir o contato <strong>{{ object }}</strong>?</p>
+        <p class="text-muted">Esta ação não pode ser desfeita.</p>
+        
+        <form action="" method="POST" style="display: inline-block;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+        <a href="{% url 'perfil_usuario' request.user.username %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</div>
+{% endblock %}
