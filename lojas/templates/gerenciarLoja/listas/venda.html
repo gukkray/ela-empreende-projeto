@@ -83,7 +83,9 @@
                     <td>{{ venda.total }}</td>
                     <td>{{ venda.data_criacao }}</td>
                     <td>
-                        <a href="{% url 'excluir_venda' venda.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+                        <a href="{% url 'excluir_venda' venda.pk %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 {% empty %}

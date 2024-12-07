@@ -39,7 +39,7 @@ class TarefaCreate(LoginRequiredMixin, CreateView):
 class TarefaUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Tarefa
-    template_name = "agendando/cadastrar_tarefa.html"
+    template_name = "agendando/cadastrar_tarefa_edit.html"
     form_class = TarefaForm
     success_url = reverse_lazy('listar-tarefas')
 

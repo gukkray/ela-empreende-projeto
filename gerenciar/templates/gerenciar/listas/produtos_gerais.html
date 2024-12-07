@@ -33,9 +33,15 @@
 
                                 <!-- Botões de edição e exclusão -->
                                 <div class="d-flex justify-content-center mt-3">
-                                    <a href="{% url 'editar-produto' produto.id %}" class="btn btn-warning btn-sm mx-1">Editar</a>
-                                    <a href="{% url 'excluir-produto' produto.id %}" class="btn btn-danger btn-sm mx-1">Excluir</a>
+                                    <a href="{% url 'editar-produto' produto.id %}" class="btn btn-primary btn-sm" style="margin-right: 10px;">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'excluir-produto' produto.id %}" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
                                 </div>
+                                
+                                
                             </div>
                         </div>
                     </div>

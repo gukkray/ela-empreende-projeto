@@ -66,9 +66,12 @@
                 <td>{{ tarefa.data_inicio }}</td>
                 <td>{{ tarefa.data_fim }}</td>
                 <td>
-                    <a href="{% url 'editar-tarefa' tarefa.pk %}" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="{% url 'excluir-tarefa' tarefa.pk %}" class="btn btn-danger btn-sm">Excluir</a>
-                   
+                    <a href="{% url 'editar-tarefa' tarefa.pk %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'excluir-tarefa' tarefa.pk %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </a>
                 </td>
             </tr>
             {% empty %}

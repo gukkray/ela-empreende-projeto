@@ -4,7 +4,7 @@
 <link href="{% static 'img/icon.png' %}" rel="icon">
 
 {% block titulo %}
-<title>Editar cliente</title>
+<title>Editar tarefa</title>
 {% endblock %}
 
 {% block estilos %}
@@ -20,7 +20,7 @@
         justify-content: flex-start; /* Alinha o conteúdo à esquerda */
         padding-top: 1rem;
         padding-left: 1rem; /* Ajuste do espaço à esquerda */
-       
+        /* Cor de fundo */
     }
 
     /* Estilos principais para o formulário */
@@ -101,10 +101,9 @@
         <hr>
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <h4>Editar cliente</h4>
+            <h4>Editar tarefa</h4>
             {{ form|crispy }}
             <button type="submit" class="btn btn-primary btn-sm">Editar</button>
-            <a href="{% url 'cliente_list' %}" class="btn btn-primary btn-sm">Ver Clientes</a>
         </form>
     </div>
 </div>
