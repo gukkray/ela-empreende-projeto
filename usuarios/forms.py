@@ -69,28 +69,61 @@ class EnderecoForm(forms.ModelForm):
         fields = ['estado', 'cidade', 'endereco', 'numero', 'complemento']
 
 
+
+
+from django import forms
+from .models import Contato
+
 class ContatoForm(forms.ModelForm):
     class Meta:
         model = Contato
         fields = ['contato', 'contato2']
         labels = {
             'contato': 'Adicione um contato:',
-            'contato2': 'Adicione outro contato:',
+            'contato2': 'Adicione outro contato (opcional):',
         }
 
+    def validate_phone_number(self, phone_number):
+        """Valida se o número de telefone contém apenas dígitos."""
+        if not phone_number:
+            raise forms.ValidationError("O campo de contato não pode estar vazio.")
+        if not phone_number.isdigit():
+            raise forms.ValidationError("O número de contato deve conter apenas dígitos.")
+        if len(phone_number) < 8 or len(phone_number) > 15:
+            raise forms.ValidationError("O número de contato deve ter entre 8 e 15 dígitos.")
+        return phone_number
+
     def clean_contato(self):
+        """Valida o campo 'contato', que é obrigatório."""
         contato = self.cleaned_data.get('contato')
         return self.validate_phone_number(contato)
 
     def clean_contato2(self):
+        """Valida o campo 'contato2', que é opcional."""
         contato2 = self.cleaned_data.get('contato2')
-        return self.validate_phone_number(contato2)
+        if contato2:  # Apenas valida se houver algum valor no campo.
+            return self.validate_phone_number(contato2)
+        return contato2  # Retorna o valor vazio ou None, sem erro.
 
-    def validate_phone_number(self, phone_number):
-        phone_number_digits = re.sub(r'\D', '', phone_number)
-        if len(phone_number_digits) < 9:  # Corrigido para 9 dígitos
-            raise ValidationError(_("O contato deve conter no mínimo 9 números."))
-        return phone_number_digits
+    def activate_phone_number(self):
+        """Processa os números de telefone, removendo caracteres não numéricos."""
+        phone_number_digits = ""  # Inicializa a variável para o primeiro número
+        second_phone_number_digits = ""  # Inicializa a variável para o segundo número
+
+        # Processa o primeiro número de contato
+        phone_number = self.cleaned_data.get('contato')
+        if phone_number:
+            phone_number_digits = "".join(filter(str.isdigit, phone_number))
+
+        # Processa o segundo número de contato, se disponível
+        phone_number2 = self.cleaned_data.get('contato2')
+        if phone_number2:
+            second_phone_number_digits = "".join(filter(str.isdigit, phone_number2))
+
+        # Apenas para depuração (remova ou substitua em produção)
+        print("Contato 1:", phone_number_digits)
+        print("Contato 2 (opcional):", second_phone_number_digits)
+
 
 
 class ExcluirContatoForm(forms.Form):

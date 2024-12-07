@@ -32,7 +32,7 @@ class ClienteUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Cliente
     form_class = ClienteForm
-    template_name = 'cliente_form.html'
+    template_name = 'cliente_form_edit.html'
     success_url = reverse_lazy('cliente_list')
 
     def get_queryset(self):

@@ -30,8 +30,8 @@ class UsuarioCreate(CreateView):
         response = super().form_valid(form)
         
         # Salvar a descrição e a imagem no modelo Empresa
-        descricao = form.cleaned_data['descricao']
-        imagem = form.cleaned_data['imagem']
+        descricao = form.cleaned_data.get('descricao', "")
+        imagem = form.cleaned_data.get('imagem', None)
         empresa = Empresa.objects.create(user=self.object, descricao=descricao, imagem=imagem)
         
         # Verifica e adiciona o grupo "empresa" ao usuário
@@ -42,6 +42,7 @@ class UsuarioCreate(CreateView):
         login(self.request, self.object)
 
         return response
+
 
 
 from django.contrib.auth.decorators import login_required
@@ -206,10 +207,6 @@ def cadastrar_contato(request):
     else:
         form = ContatoForm()
     return render(request, 'usuarios/cadastrar_contato.html', {'form': form})
-
-       
-    
-
 
     
 class ContatoUpdate(LoginRequiredMixin, UpdateView):

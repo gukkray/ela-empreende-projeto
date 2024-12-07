@@ -33,7 +33,7 @@ class ProdutoCreate(LoginRequiredMixin, CreateView):
 class ProdutoUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     model = Produto
-    template_name = "gerenciar/cadastrar_produto.html"
+    template_name = "gerenciar/editar-produto.html"
     form_class = ProdutoForm
     success_url = reverse_lazy('listar-produto')
 

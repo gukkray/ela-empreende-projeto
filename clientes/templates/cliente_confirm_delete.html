@@ -1,0 +1,64 @@
+{% extends 'modelo.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+<title>Excluir Cliente</title>
+{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'css/abrir_caixa.css' %}">
+<link rel="stylesheet" href="{% static 'css/cssdavenda.css' %}">
+<style>
+    /* Estilos para a tabela com tema rosa #e21e80 */
+    .table {
+      border: 1px solid #e21e80; /* Rosa escuro */
+      border-collapse: collapse;
+      background-color: #ffe6f2; /* Rosa claro para o fundo da tabela */
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .table th, .table td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #f3a3c6; /* Bordas em rosa mais suave */
+    }
+  
+    .table th {
+      background-color: #e21e80; /* Rosa forte para o cabeçalho */
+      color: #fff; /* Texto branco para contraste */
+    }
+  
+    .table tr:nth-child(even) {
+      background-color: #f9c6da; /* Tom de rosa claro para linhas pares */
+    }
+  
+    .table tr:hover {
+      background-color: #f3a3c6; /* Tom médio de rosa no hover */
+    }
+  
+    .btn {
+      margin: 5px;
+    }
+  
+    #success-message {
+      margin-top: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block corpo %}
+<div class="corpo">
+    <div class="container formulario-container">
+        <h4>Excluir Cliente</h4>
+        <p>Tem certeza de que deseja excluir o cliente <strong>{{ object.nome }}</strong>?</p>
+        <p class="text-muted">Esta ação não pode ser desfeita.</p>
+        <form method="POST" style="display: inline-block;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+        <a href="{% url 'cliente_list' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</div>
+{% endblock %}
